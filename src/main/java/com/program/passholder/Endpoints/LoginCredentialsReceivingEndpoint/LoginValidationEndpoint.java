@@ -35,6 +35,7 @@ public ResponseEntity<Map<String, String>> isUserValidEndpoint(@RequestBody Logi
         isValid = validationUser.validateUser(email, password);
         System.out.println("Is user: " + email + " Valid?: " + isValid);
         String username = getUserFromMail.getUserFromMail(email);
+        System.out.println("Username From mail: " + username);
         if (isValid && username != null){
             String token = jwtUtil.generateToken(email);
             return ResponseEntity.ok(Map.of("status", "Validated","username", username, "token",token ));

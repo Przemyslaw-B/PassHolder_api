@@ -23,6 +23,7 @@ public class ParseStorageToJson {
             userData.put("login", picked.getLogin());
             userData.put("password", picked.getPassword());
             userData.put("expDate", picked.getExpDate());
+            userData.put("modDate", picked.getModifyDate());
             resList.add(userData);
         }
         try{

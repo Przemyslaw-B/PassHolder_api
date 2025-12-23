@@ -21,6 +21,8 @@ public class PasswordEntity {
     private String password;
     @Column(name="exp_date")
     private Date expDate;
+    @Column(name="modify_date")
+    private Date modifyDate;
 
     public Long getId() {return id;}
 
@@ -38,5 +40,8 @@ public class PasswordEntity {
 
     public Date getExpDate() {return expDate;}
     public void setExpDate(Date exp_date) {this.expDate = exp_date;}
+
+    public Date getModifyDate() {return modifyDate;}
+    public void setModifyDate(Date modify_date) {this.modifyDate = modify_date;}
 
 }
