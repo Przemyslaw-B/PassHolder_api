@@ -26,13 +26,12 @@ public class UserStorageEndpoint {
     @GetMapping("/recieveStorage")
     public ResponseEntity<Map<String, Object>> getUserStorageEndpoint(
             @RequestHeader("Authorization") String authHeader){
-        System.out.println("getUserStorageEndpoint..");
+        //System.out.println("getUserStorageEndpoint..");
         if(authHeader!=null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
-            System.out.println("token:"+token);
+            //System.out.println("token:"+token);
             if(token!=null && jwtUtil.validateToken(token)){
                 String user = jwtUtil.extractUsername(token);
-                //TODO zamiana storage na json i wysłanie do usera
                 //String json = loadUserStorage.loadUserStorage(user);
                 //System.out.println("Otrzymany json na wyjście api:" + json);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "storage", loadUserStorage.loadUserStorage(user)));
