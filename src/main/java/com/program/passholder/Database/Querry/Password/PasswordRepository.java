@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface PasswordRepository extends JpaRepository<PasswordEntity,Long> {
     List<PasswordEntity> findByUserId(Long id);
+    void deleteByIdAndUserId(Long id, Long userId);
 }

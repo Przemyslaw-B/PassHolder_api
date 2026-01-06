@@ -49,5 +49,17 @@ public class UserService {
                 .orElse(null);
     }
 
+    public String getAuthKeyByMail(String email){
+        return userRepository.findByEmail(email)
+                .map(UserEntity::getAuthKey)
+                .orElse(null);
+    }
+
+    public int isAuthNeeded(String email){
+        return userRepository.findByEmail(email)
+                .map(UserEntity::getIsAuthorized)
+                .orElse(0);
+    }
+
 
 }

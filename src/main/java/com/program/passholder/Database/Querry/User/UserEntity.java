@@ -23,6 +23,14 @@ public class UserEntity {
     private String name;
     @Column(name="token")
     private String token;
+    @Column(name="auth_key")
+    private String authKey;
+    @Column(name="is_authorized")
+    private int isAuthorized;
+    @Column(name="email_activator")
+    private String emailActivator;
+    @Column(name="is_activated")
+    private int isActivated;
 
 
     public Long getId() {return id;}
@@ -48,5 +56,17 @@ public class UserEntity {
 
     public String getToken() {return token;}
     public void setToken(String token) {this.token = token;}
+
+    public String getAuthKey() {return authKey;}
+    public void setAuthKey(String authKey) {this.authKey = authKey;}
+
+    public int getIsAuthorized() {return isAuthorized;}
+    public void setIsAuthorized(int isAuthorized) {this.isAuthorized = isAuthorized;}
+
+    public String getEmailActivator() {return emailActivator;}
+    public void setEmailActivator(String emailActivator) {this.emailActivator = emailActivator;}
+
+    public int getIsActivated() {return isActivated;}
+    public void setIsActivated(int isActivated) {this.isActivated = isActivated;}
 
 }
