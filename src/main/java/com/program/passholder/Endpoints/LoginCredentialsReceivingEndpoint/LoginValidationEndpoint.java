@@ -3,6 +3,7 @@ package com.program.passholder.Endpoints.LoginCredentialsReceivingEndpoint;
 import com.program.passholder.Authorization.IsAuthorized;
 import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Database.Querry.User.User.*;
+import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
 import com.program.passholder.Session.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,28 +28,32 @@ public class LoginValidationEndpoint {
     ProceedAuth proceedAuth;
     @Autowired
     IsAuthorized isAuthorized;
+    @Autowired
+    UserService userService;
 
     @PostMapping("/userValidation")
 public ResponseEntity<Map<String, String>> isUserValidEndpoint(@RequestBody LoginRequest request){
         //System.out.println("Weryfikacja Usera");
         String email = request.getEmail();
         String password = request.getPassword();
+        if(!userService.isUserExist(email)){
+            return ResponseEntity.ok(Map.of("status", "Invalid"));
+        }
         boolean isValid=false;
         isValid = validationUser.validateUser(email, password);
-        System.out.println("Is user: " + email + " Valid?: " + isValid);
         String username = getUserFromMail.getUserFromMail(email);
-        System.out.println("Username From mail: " + username);
         if (isValid && username != null){
             String token = jwtUtil.generateToken(email);
             boolean authorized = isAuthorized.isAuthorized(email);
             String auth = Boolean.toString(authorized);
+            System.out.println("Username From mail: " + username);
             System.out.println("Is authorized needed?: " + auth);
             if(auth.equals("false")){   // Użytkownik wymaga dodatkowej autoryzacji
                 proceedAuth.proceed(email); //Wyślij kod autoryzacyjny na email
             }
             return ResponseEntity.ok(Map.of("status", "Validated","username", username, "token",token, "auth", auth));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
+        return ResponseEntity.ok(Map.of("status", "Invalid"));
     }
 
 }

@@ -19,8 +19,8 @@ public class ValidationUser {
 
     public boolean validateUser(String email, String password) {
         String passwordDB = userService.getPasswordByEmail(email);
-        String privateKey = userService.getPrivateKeyByEmail(email);
-        String decodedPassword = decoder.decrypt(password, privateKey);
-        return passwordEncoder.matches(decodedPassword, passwordDB);
+        //String privateKey = userService.getPrivateKeyByEmail(email);
+        //String decodedPassword = decoder.decrypt(password, privateKey);
+        return passwordEncoder.matches(password, passwordDB);
     }
 }

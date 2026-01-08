@@ -28,8 +28,9 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable())   //TODO Wyłączone HTTP Basic Authentication - brak logowania przez przeglądarkę
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/userValidation").permitAll()  //dostęp dla wszystkich tylko do procesu logowania
-                        .requestMatchers("/api/GetPublicKey").permitAll()    //dostęp dla wszystkich do publicznego klucza (wymagany do przesłania danych logowania)
+                        .requestMatchers("/api/userValidation").permitAll()     //dostęp dla wszystkich tylko do procesu logowania
+                        //.requestMatchers("/api/GetPublicKey").permitAll()       //dostęp dla wszystkich do publicznego klucza (wymagany do przesłania danych logowania)
+                        .requestMatchers("/api/CreateNewAccount").permitAll()  //dostęp dla wszystkich przy zakładaniu konta
                         .anyRequest().authenticated())               // Cała reszta wymaga tokenu
                 .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);    //W pierwszej kolejności sprawdzaj dodany jwtFilter (Token użytkownika)
         return http.build();

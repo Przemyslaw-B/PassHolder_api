@@ -61,5 +61,14 @@ public class UserService {
                 .orElse(0);
     }
 
+    public boolean isUserExist(String email){
+        String get = userRepository.findByEmail(email)
+                .map(UserEntity::getEmail)
+                .orElse("");
+        if(get.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 
 }
