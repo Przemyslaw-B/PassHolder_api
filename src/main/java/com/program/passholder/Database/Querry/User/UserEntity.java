@@ -1,5 +1,6 @@
 package com.program.passholder.Database.Querry.User;
 
+import com.program.passholder.Security.EncryptionConverter;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,20 +11,28 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="email")
+    @Convert(converter = EncryptionConverter.class)
     private String email;
     @Column(name="password")
+    @Convert(converter = EncryptionConverter.class)
     private String password;
     @Column(name="phone")
+    @Convert(converter = EncryptionConverter.class)
     private String phone;
     @Column(name="public_key")
+    @Convert(converter = EncryptionConverter.class)
     private String publicKey;
     @Column(name="private_key")
+    @Convert(converter = EncryptionConverter.class)
     private String privateKey;
     @Column(name="name")
+    @Convert(converter = EncryptionConverter.class)
     private String name;
     @Column(name="token")
+    @Convert(converter = EncryptionConverter.class)
     private String token;
     @Column(name="auth_key")
+    @Convert(converter = EncryptionConverter.class)
     private String authKey;
     @Column(name="is_authorized")
     private int isAuthorized;
@@ -31,7 +40,6 @@ public class UserEntity {
     private String emailActivator;
     @Column(name="is_activated")
     private int isActivated;
-
 
     public Long getId() {return id;}
     //public void setId(Long id) {this.id = id;}

@@ -1,5 +1,6 @@
 package com.program.passholder.Database.Querry.Password;
 
+import com.program.passholder.Security.EncryptionConverter;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,10 +15,13 @@ public class PasswordEntity {
     @Column(name="user_id")
     private Long userId;
     @Column(name="url")
+    @Convert(converter = EncryptionConverter.class)
     private String url;
     @Column(name="login")
+    @Convert(converter = EncryptionConverter.class)
     private String login;
     @Column(name="password")
+    @Convert(converter = EncryptionConverter.class)
     private String password;
     @Column(name="exp_date")
     private Date expDate;
