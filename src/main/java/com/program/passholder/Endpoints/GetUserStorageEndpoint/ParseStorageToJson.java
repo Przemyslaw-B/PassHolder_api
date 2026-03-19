@@ -24,6 +24,7 @@ public class ParseStorageToJson {
             userData.put("password", picked.getPassword());
             userData.put("expDate", picked.getExpDate());
             userData.put("modDate", picked.getModifyDate());
+            userData.put("rotation", picked.getRotation());
             resList.add(userData);
         }
         try{

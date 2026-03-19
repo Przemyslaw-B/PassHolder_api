@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class LoginLimitFilter extends OncePerRequestFilter {
-    //TODO integracja z REDIS'em???
 
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 

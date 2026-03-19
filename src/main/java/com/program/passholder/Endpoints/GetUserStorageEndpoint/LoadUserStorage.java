@@ -31,10 +31,9 @@ public class LoadUserStorage {
         Long userId = getUserId(email);
         clearMaps();    //Wyczyść mapę
         if(userId != null && userId>0){
-            System.out.println("Szukam storage dla id:" + userId);
+            //System.out.println("Szukam storage dla id:" + userId);
             List storage = getStorageByUserId.getStorageByUserId(userId);
             if(storage!=null){
-                //TODO Utowrzenie JSON aby zwrócić go przez API
                 //String json = parseStorageToJson.parseToJson(storage);
                 return parseStorageToJson.parseToJson(storage);
             }

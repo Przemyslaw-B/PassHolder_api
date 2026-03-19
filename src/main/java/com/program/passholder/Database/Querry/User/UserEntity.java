@@ -40,6 +40,8 @@ public class UserEntity {
     private String emailActivator;
     @Column(name="is_activated")
     private int isActivated;
+    @Column(name="default_rotation")
+    private int rotation;
 
     public Long getId() {return id;}
     //public void setId(Long id) {this.id = id;}
@@ -76,5 +78,8 @@ public class UserEntity {
 
     public int getIsActivated() {return isActivated;}
     public void setIsActivated(int isActivated) {this.isActivated = isActivated;}
+
+    public int getRotation() {return rotation;}
+    public void setRotation(int rotation) {this.rotation = rotation;}
 
 }
