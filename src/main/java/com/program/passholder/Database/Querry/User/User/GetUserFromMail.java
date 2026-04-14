@@ -16,4 +16,8 @@ public class GetUserFromMail {
     public String getUserFromMail(String email){
         return userService.getNameByMail(email);
     }
+
+    public  long getUserIdFromMail(String email){
+        return userService.getUserIdByMail(email);
+    }
 }

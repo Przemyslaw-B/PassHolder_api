@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PasswordService {
@@ -14,7 +15,11 @@ public class PasswordService {
         this.passwordRepository = passwordRepository;
     }
 
-    public List<PasswordEntity> getStorageByUserId(Long userId){
-        return passwordRepository.findByUserId(userId);
+    public List<PasswordEntity> getStorageByUserId(Long user_id){
+        return passwordRepository.findByUserId(user_id);
+    }
+
+    public Optional<PasswordEntity> getPasswordByIdAndUserId(Long id, Long user_id){
+        return passwordRepository.findByIdAndUserId(id, user_id);
     }
 }

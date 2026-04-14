@@ -38,7 +38,7 @@ public class LoadUserStorage {
                 return parseStorageToJson.parseToJson(storage);
             }
         }
-        //jeśli nie ma użytkownika, zwróć pustą mapę
+        //jeśli nie ma użytkownika, zwróć pustą mapęs
         return null;
     }
 

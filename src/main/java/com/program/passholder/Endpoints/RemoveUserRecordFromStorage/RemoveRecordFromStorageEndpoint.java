@@ -33,6 +33,7 @@ public class RemoveRecordFromStorageEndpoint {
                         .orElseThrow(() -> new RuntimeException("User not found"));
                 long userId=user.getId();
                 long recordId=requestBody.recordId;
+                System.out.println("Otrzymano request usunięcia rekordu: " + recordId);
                 removeRecordFromStorage.removeRecordFromStorage(userId, recordId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Success"));
             }
