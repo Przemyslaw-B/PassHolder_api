@@ -22,4 +22,8 @@ public class PasswordService {
     public Optional<PasswordEntity> getPasswordByIdAndUserId(Long id, Long user_id){
         return passwordRepository.findByIdAndUserId(id, user_id);
     }
+
+    public Optional<PasswordEntity> getEntityById(Long id){
+        return passwordRepository.findById(id);
+    }
 }

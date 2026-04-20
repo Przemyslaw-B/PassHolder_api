@@ -42,6 +42,8 @@ public class UserEntity {
     private int isActivated;
     @Column(name="default_rotation")
     private int rotation;
+    @Column(name="security_password")
+    private String security_password;
 
     public Long getId() {return id;}
     //public void setId(Long id) {this.id = id;}
@@ -81,5 +83,8 @@ public class UserEntity {
 
     public int getRotation() {return rotation;}
     public void setRotation(int rotation) {this.rotation = rotation;}
+
+    public String getSecurity_password() {return security_password;}
+    public void setSecurity_password(String security_password) {this.security_password = security_password;}
 
 }

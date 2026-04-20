@@ -19,4 +19,5 @@ public class GetStorageByUserId {
     public List<PasswordEntity> getStorageByUserId(Long userId){
         return passwordService.getStorageByUserId(userId);
     }
+
 }

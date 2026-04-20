@@ -1,5 +1,7 @@
 package com.program.passholder.Database.Querry.User;
 
+import com.program.passholder.Database.Querry.User.User.SetSecurityPassword;
+import com.program.passholder.Endpoints.SetSecurityPassword.SetSecurityPasswordEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,10 +9,18 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    @Autowired
+    SetSecurityPassword setSecurityPassword;
 
     @Autowired
     public UserService(UserRepository userRepository){
         this.userRepository=userRepository;
+    }
+
+    public String getSecurityPasswordById(long id){
+        return userRepository.findById(id)
+                .map(UserEntity::getSecurity_password)
+                .orElse(null);
     }
 
     public String getPasswordByEmail(String email){
@@ -59,6 +69,10 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .map(UserEntity::getIsAuthorized)
                 .orElse(0);
+    }
+
+    public void setSecurityPassword(long userId, String securityPassword){
+        setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
     }
 
     public boolean isUserExist(String email){
