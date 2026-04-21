@@ -28,7 +28,7 @@ public class ShowPasswordEndpoint {
     @Autowired
     UserService userService;
 
-    @GetMapping("/showPassword")
+    @GetMapping("/getPassword")
     public ResponseEntity<Map<String, Object>> getUserStorageEndpoint(
             @RequestHeader("Authorization") String authHeader,
             @RequestBody ShowPasswordDTO request){

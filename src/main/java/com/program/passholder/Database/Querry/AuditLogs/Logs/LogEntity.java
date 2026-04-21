@@ -16,6 +16,8 @@ public class LogEntity {
     private int idEvent;
     @Column(name="id_user")
     private long idUser;
+    @Column(name="id_record")
+    private long idRecord;
     @Column(name="ip")
     private String ip;
     @Column(name="timestamp")
@@ -30,6 +32,9 @@ public class LogEntity {
 
     public void setUserId(long idUser){this.idUser = idUser;}
     public long getUserId(){return this.idUser;}
+
+    public void setIdRecord(long idRecord){this.idRecord = idRecord;}
+    public long getIdRecord(){return this.idRecord;}
 
     public void setIp(String ip){this.ip = ip;}
     public String getIp(){return this.ip;}
