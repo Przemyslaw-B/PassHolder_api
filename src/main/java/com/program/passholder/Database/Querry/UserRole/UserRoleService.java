@@ -1,11 +1,5 @@
 package com.program.passholder.Database.Querry.UserRole;
 
-import com.program.passholder.Database.Querry.Roles.RoleRepository;
-import com.program.passholder.Database.Querry.Roles.RoleService;
-import com.program.passholder.Database.Querry.User.UserRepository;
-import com.program.passholder.Database.Querry.User.UserService;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +26,6 @@ public class UserRoleService {
     }
 
     public List<UserRoleEntity> findAllByIdSettedBy(long settedBy) {
-        return userRoleRepository.findByIdSettedBy(settedBy);
+        return userRoleRepository.findBySettedBy(settedBy);
     }
 }

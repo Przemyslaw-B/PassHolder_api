@@ -19,6 +19,10 @@ public class LogService {
         return logRepository.findById(id);
     }
 
+    public List <LogEntity> getAllLogs() {
+        return logRepository.findAll();
+    }
+
     public List<LogEntity> getListOfEntityByIdEvent(int idEvent) {
         return logRepository.findAllByIdEvent(idEvent);
     }
