@@ -44,7 +44,7 @@ public class RoleValidation {
     }
 
     private boolean roleValidation(long idUser, int idRole){
-        Optional<RoleEntity> roleEntity = roleService.findById(idRole);
+        Optional<RoleEntity> roleEntity = roleService.getById(idRole);
         if(roleEntity.isPresent()){
             return hasRole(idUser, idRole);
         }
@@ -65,7 +65,7 @@ public class RoleValidation {
     }
 
     private int getSystemRoleId(String roleName){
-        Optional<RoleEntity> roleEntity= roleService.findByName(roleName);
+        Optional<RoleEntity> roleEntity= roleService.getByName(roleName);
         if(roleEntity.isPresent()){
             return roleEntity.get().getId();
         }

@@ -43,6 +43,7 @@ public class UserEntity {
     @Column(name="default_rotation")
     private int rotation;
     @Column(name="security_password")
+    @Convert(converter = EncryptionConverter.class)
     private String security_password;
 
     public Long getId() {return id;}

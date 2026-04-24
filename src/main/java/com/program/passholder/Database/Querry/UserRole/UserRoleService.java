@@ -28,4 +28,8 @@ public class UserRoleService {
     public List<UserRoleEntity> findAllByIdSettedBy(long settedBy) {
         return userRoleRepository.findBySettedBy(settedBy);
     }
+
+    public List<UserRoleEntity> findAll() {
+        return userRoleRepository.findAll();
+    }
 }
