@@ -33,7 +33,7 @@ public class GetRolesEndpoint {
     public ResponseEntity<Map<String, Object>> getRoles(
         @RequestHeader("Authorization") String authHeader){
         if(authHeader != null && authHeader.startsWith("Bearer ")){
-            System.out.println("API ROLE ENDPOINT!");
+            //System.out.println("API ROLE ENDPOINT!");
             String token = authHeader.substring(7);
             String userMail = jwtUtil.extractUsername(token);
             long userId = getFromMail.getUserIdFromMail(userMail);
