@@ -1,8 +1,10 @@
 package com.program.passholder.Database.Querry.AuditLogs.Logs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +56,35 @@ public class LogService {
             entity.setDetails(details);
         }
         logRepository.save(entity);
+    }
+
+    public static Specification<LogEntity> hasType(Integer type) {
+        return (root, query, cb) ->
+                type == null ? null : cb.equal(root.get("idEvent"), type);
+    }
+
+    public static Specification<LogEntity> hasIp(String ip) {
+        return (root, query, cb) ->
+                ip == null ? null : cb.like(root.get("ip"), "%" + ip + "%");
+    }
+
+    public static Specification<LogEntity> hasUser(Long userId){
+        return (root, query, cb) ->
+                userId == null ? null : cb.equal(root.get("idUser"), userId);
+    }
+
+    public static Specification<LogEntity> hasSettedBy(Long settedBy){
+        return (root, query, cb) ->
+                settedBy == null ? null : cb.equal(root.get("settedBy"), settedBy);
+    }
+
+    public static Specification<LogEntity> hasDateAfter(Date from) {
+        return (root, query, cb) ->
+                from == null ? null : cb.greaterThanOrEqualTo(root.get("timestamp"), from);
+    }
+
+    public static Specification<LogEntity> hasDateBefore(Date to) {
+        return (root, query, cb) ->
+                to == null ? null : cb.lessThanOrEqualTo(root.get("timestamp"), to);
     }
 }

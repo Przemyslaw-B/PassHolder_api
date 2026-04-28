@@ -24,6 +24,9 @@ public class LogEntity {
     private Timestamp timestamp;
     @Column(name="details")
     private String details;
+    @Column(name="setted_by")
+    private long settedBy;
+
 
     public long getId() {return this.id;}
 
@@ -43,4 +46,7 @@ public class LogEntity {
 
     public void setDetails(String details){this.details=details;}
     public String getDetails(){return this.details;}
+
+    public long getSettedBy(){return this.settedBy;}
+    public void setSettedBy(long settedBy){this.settedBy = settedBy;}
 }

@@ -16,6 +16,11 @@ public class EventService {
         return entity.map(EventEntity::getName);
     }
 
+    public Optional<Integer> getIdByName(String name) {
+        Optional<EventEntity> entity = eventRepository.findByName(name);
+        return entity.map(EventEntity::getId);
+    }
+
     public List<EventEntity> getAllEvents(){
     List<EventEntity> events = eventRepository.findAll();
     return events;
