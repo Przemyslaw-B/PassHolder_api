@@ -43,7 +43,7 @@ public class GetLogsEndpoint {
             Map<String, Object> data= new HashMap<>();
             data.put("typeName", request.typeName);
             data.put("adminMail", request.adminMail);
-            data.put("userLogMail", request.userMail);
+            //data.put("userLogMail", request.userMail);
             data.put("fromDate", request.fromDate);
             data.put("toDate", request.toDate);
 

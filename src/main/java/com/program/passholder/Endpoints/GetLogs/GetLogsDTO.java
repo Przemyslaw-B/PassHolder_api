@@ -5,7 +5,7 @@ public class GetLogsDTO {
     public int pageNumber;
     public int pageSize;
     public String typeName;
-    public String userMail;
+    //public String userMail;
     public String adminMail;
     public Date fromDate;
     public Date toDate;

@@ -39,7 +39,6 @@ public class GetFiltersDataEndpoint {
     public ResponseEntity<Map<String, Object>> GetFiltersData(
             @RequestHeader("Authorization") String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            System.out.println("Dane do filtrów...");
             String token = authHeader.substring(7);
             String userMail = jwtUtil.extractUsername(token);
             long userId = getFromMail.getUserIdFromMail(userMail);

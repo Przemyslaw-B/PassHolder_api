@@ -5,6 +5,7 @@ import com.program.passholder.Database.Querry.Roles.RoleService;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.UserRole.UserRoleEntity;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
+import com.program.passholder.Roles.GetRoleDetailsOfUsers;
 import com.program.passholder.Session.JwtUtil;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class GetRolesEndpoint {
     GetFromMail getFromMail;
     @Autowired
     UserRoleService userRoleService;
+    @Autowired
+    GetRoleDetailsOfUsers getRoleDetailsOfUsers;
 
     @GetMapping("/recieveRoles")
     public ResponseEntity<Map<String, Object>> getRoles(
@@ -40,8 +43,9 @@ public class GetRolesEndpoint {
             //TODO rolecheck!
             List<UserRoleEntity> roleList = new ArrayList<UserRoleEntity>();
             roleList = userRoleService.findAll();
-            System.out.println("Role: "+ roleList.size());
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "roles", roleList));
+            //System.out.println("Role: "+ roleList.size());
+            List<Object> list = getRoleDetailsOfUsers.getDetails(roleList);
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "roles", list));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }

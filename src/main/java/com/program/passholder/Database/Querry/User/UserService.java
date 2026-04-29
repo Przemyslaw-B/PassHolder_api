@@ -1,5 +1,6 @@
 package com.program.passholder.Database.Querry.User;
 
+import com.program.passholder.Database.Querry.AuditLogs.Logs.LogEntity;
 import com.program.passholder.Database.Querry.User.User.SetSecurityPassword;
 import com.program.passholder.Endpoints.SetSecurityPassword.SetSecurityPasswordEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class UserService {
 
     public Optional<UserEntity> getEntityByid(long id) {
         return userRepository.findById(id);
+    }
+
+    public String getMailById(long id){
+        return userRepository.findById(id)
+                .map(UserEntity::getEmail)
+                .orElse(null);
     }
 
     public String getSecurityPasswordById(long id){
@@ -92,10 +99,13 @@ public class UserService {
         return true;
     }
 
-    public static Specification<UserEntity> hasUser(String userMail){
+    /*
+    public static Specification<UserEntity> hasUser(String userMail) {
+        System.out.println("Szukan w UserService maila:" + userMail);
         return (root, query, cb) ->
-                userMail == null ? null : cb.like(root.get("email"), "%" + userMail + "%");
+                userMail == null ? null : cb.like(root.get("email"), "%" + userMail.toLowerCase().trim() + "%");
     }
+    */
 
 
 }
