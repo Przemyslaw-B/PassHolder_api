@@ -1,10 +1,7 @@
 package com.program.passholder.Database.Querry.User;
 
-import com.program.passholder.Database.Querry.AuditLogs.Logs.LogEntity;
 import com.program.passholder.Database.Querry.User.User.SetSecurityPassword;
-import com.program.passholder.Endpoints.SetSecurityPassword.SetSecurityPasswordEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
