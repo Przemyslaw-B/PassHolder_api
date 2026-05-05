@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -27,12 +28,15 @@ public class GetSecurityPasswordEndpoint {
     public ResponseEntity<Map<String, Object>> getSecurityPassword(
             @RequestHeader("Authorization") String authHeader){
         if(authHeader != null && authHeader.startsWith("Bearer ")) {
+            //System.out.println("Użytkownik chce pobrać swoje hasło bezpieczeństwa..");
             String token = authHeader.substring(7);
             if(jwtUtil.validateToken(token)) {
                 String userMail = jwtUtil.extractUsername(token);
                 long userId = getFromMail.getUserIdFromMail(userMail);
                 String password = userService.getSecurityPasswordById(userId);
-                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "securityPassword",  password));
+                Map<String, String> map = new HashMap<>();
+                map.put("securityPassword", password);
+                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "map", map));
             }
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "token invalid"));
         }

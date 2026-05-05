@@ -28,10 +28,20 @@ public class SetSecurityPasswordEndpoint {
                 long userId = userService.getUserIdByMail(userEmail);
                 String newSecurityPassword = request.newSecurityPassword;
                 String userSecurityPassword = userService.getSecurityPasswordById(userId);
+                System.out.println("ustawiam nowe hasło bezpieczeństwa..");
+                System.out.println("request:" + request);
+                System.out.println("newSecurityPassword:" + newSecurityPassword);
+                System.out.println("oldSecurityPassword:" + userSecurityPassword);
+                if(userSecurityPassword != null){
+                    System.out.println("Użytkownik posiada już hasło bezpieczeństwa.");
+                    return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "securityPassword already set"));
+                }
                 if(newSecurityPassword != null && !newSecurityPassword.equals("")) {
+                    System.out.println("Ustawiam nowe hasło..");
                     userService.setSecurityPassword(userId, newSecurityPassword);
                 } else{
                     //TODO logs - nie podano nowego hasła
+                    System.out.println("Nie odebrano nowego hasło..");
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "new security password is required"));
                 }
             } else{

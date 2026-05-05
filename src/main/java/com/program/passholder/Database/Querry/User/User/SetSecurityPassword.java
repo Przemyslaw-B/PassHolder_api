@@ -10,7 +10,7 @@ public class SetSecurityPassword {
     private UserRepository userRepository;
 
     public void setUserSecurityPassword(long userId, String securityPassword) {
-        userRepository.findById(userId).ifPresent(user -> {
+            userRepository.findById(userId).ifPresent(user -> {
             user.setSecurity_password(securityPassword);
             userRepository.save(user);
         });
