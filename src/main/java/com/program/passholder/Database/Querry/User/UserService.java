@@ -22,6 +22,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<UserEntity> getEntityByMail(String mail) {
+        return userRepository.findByEmail(mail);
+    }
+
     public String getMailById(long id){
         return userRepository.findById(id)
                 .map(UserEntity::getEmail)

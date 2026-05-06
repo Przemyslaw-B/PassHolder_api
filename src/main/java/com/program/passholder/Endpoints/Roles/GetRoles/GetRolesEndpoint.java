@@ -1,4 +1,4 @@
-package com.program.passholder.Endpoints.GetRoles;
+package com.program.passholder.Endpoints.Roles.GetRoles;
 
 import com.program.passholder.Database.Querry.Roles.RoleEntity;
 import com.program.passholder.Database.Querry.Roles.RoleService;

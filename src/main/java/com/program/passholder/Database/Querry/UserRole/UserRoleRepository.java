@@ -12,6 +12,7 @@ import java.util.Optional;
 interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
     Optional<UserRoleEntity> findById(long id);
     List<UserRoleEntity> findByIdUser(long idUser);
+    Optional<UserRoleEntity> findRecordByUserId(long idUser);
     List<UserRoleEntity> findBySettedBy(long settedBy);
     List<UserRoleEntity> findByIdRole(int idRole);
 }

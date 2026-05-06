@@ -1,6 +1,7 @@
 package com.program.passholder.Database.Querry.UserRole;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,10 @@ public class UserRoleService {
         return userRoleRepository.findById(id);
     }
 
+    public Optional<UserRoleEntity> findByUserId(long idUser) {
+        return userRoleRepository.findRecordByUserId(idUser);
+    }
+
     public List<UserRoleEntity> findAllByIdUser(long idUser) {
         return userRoleRepository.findByIdUser(idUser);
     }
@@ -27,6 +32,32 @@ public class UserRoleService {
 
     public List<UserRoleEntity> findAllByIdSettedBy(long settedBy) {
         return userRoleRepository.findBySettedBy(settedBy);
+    }
+
+    @Transactional
+    public boolean changeUserRole(long userId, int newRoleId) {
+        if (userId <= 0 || newRoleId <= 0) {
+            return false;
+        }
+        return userRoleRepository.findRecordByUserId(userId)
+                .map(userRole -> {
+                    userRole.setIdRole(newRoleId);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    @Transactional
+    public boolean changeUserRoleToDefaultUser(long userId) {
+        if (userId <= 0) {
+            return false;
+        }
+        return userRoleRepository.findRecordByUserId(userId)
+                .map(userRole -> {
+                    userRole.setIdRole(1);
+                    return true;
+                })
+                .orElse(false);
     }
 
     public List<UserRoleEntity> findAll() {
