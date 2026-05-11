@@ -34,7 +34,7 @@ public class UploadNewStorageRecord {
                 UserEntity user = userRepository.findByEmail(userEmail)
                                 .orElseThrow(()-> new RuntimeException("User not found"));  //Jeśli user nie istnieje rzuć wyjątek
                 long userId=user.getId();
-                long idCloud= createNewRecordForUser.setNewPasswordRecordForUser(userId, requestBody.url, requestBody.access_login, requestBody.access_pwd, requestBody.exp_date, requestBody.modification_date);
+                long idCloud= createNewRecordForUser.setNewPasswordRecordForUser(userId, requestBody.url, requestBody.access_login, requestBody.access_pwd, requestBody.modification_date);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "id_cloud", idCloud));
             }
         }

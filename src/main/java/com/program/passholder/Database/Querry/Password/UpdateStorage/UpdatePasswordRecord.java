@@ -13,13 +13,13 @@ public class UpdatePasswordRecord {
     @Autowired
     PasswordRepository passwordRepository;
 
-    public boolean setFullDataForRecord(long id, long userId, String newUrl, String newLogin, String newPassword, int newRotation){
+    public boolean setFullDataForRecord(long id, long userId, String newUrl, String newLogin, String newPassword){//}, int newRotation){
         PasswordEntity entity = getEntity(id, userId);
         if(entity == null){
             entity.setUrl(newUrl);
             entity.setLogin(newLogin);
             entity.setPassword(newPassword);
-            entity.setRotation(newRotation);
+            //entity.setRotation(newRotation);
             passwordRepository.save(entity);
             return true;
         }
@@ -57,6 +57,7 @@ public class UpdatePasswordRecord {
         return false;
     }
 
+    /*
     public boolean setRotation(long id, long userId, int rotation){
         PasswordEntity entity = getEntity(id, userId);
         if(entity != null){
@@ -66,6 +67,7 @@ public class UpdatePasswordRecord {
         }
         return false;
     }
+     */
 
     private PasswordEntity getEntity(long id, long userId){
         Optional<PasswordEntity> opt = passwordRepository.findById(id);

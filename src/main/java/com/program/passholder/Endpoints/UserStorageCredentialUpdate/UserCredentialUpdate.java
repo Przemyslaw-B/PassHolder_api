@@ -41,8 +41,8 @@ public class UserCredentialUpdate {
                 String newUrl = requestBody.url;
                 String newLogin = requestBody.login;
                 String newPassword = requestBody.password;
-                int newRotation = requestBody.rotation;
-                Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword, newRotation);
+                //int newRotation = requestBody.rotation;
+                Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword);// , newRotation);
                 if(result){
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "changes", "success"));
 

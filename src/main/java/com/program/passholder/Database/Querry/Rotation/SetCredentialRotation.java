@@ -19,10 +19,12 @@ public class SetCredentialRotation {
         this.passwordRepository=passwordRepository;
     }
 
+    /*
     @Transactional
     public void SetCredentialRotationById(long id, int rotation){
         PasswordEntity entity = passwordRepository.findById(id).orElseThrow(()->new RuntimeException("Password with requested id not found"));
         entity.setRotation(rotation);
     }
+    */
 
 }

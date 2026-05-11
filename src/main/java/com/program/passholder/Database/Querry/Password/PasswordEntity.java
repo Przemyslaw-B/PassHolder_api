@@ -27,8 +27,8 @@ public class PasswordEntity {
     private Date expDate;
     @Column(name="modify_date")
     private Date modifyDate;
-    @Column(name="rotation")
-    private int rotation;
+    //@Column(name="rotation")
+    //private int rotation;
 
     public Long getId() {return id;}
 
@@ -50,7 +50,7 @@ public class PasswordEntity {
     public Date getModifyDate() {return modifyDate;}
     public void setModifyDate(Date modify_date) {this.modifyDate = modify_date;}
 
-    public int getRotation() {return rotation;}
-    public void setRotation(int rotation) {this.rotation = rotation;}
+    //public int getRotation() {return rotation;}
+    //public void setRotation(int rotation) {this.rotation = rotation;}
 
 }

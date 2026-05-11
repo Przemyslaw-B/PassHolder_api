@@ -22,9 +22,9 @@ public class ParseStorageToJson {
             userData.put("url", picked.getUrl());
             userData.put("login", picked.getLogin());
             userData.put("password", picked.getPassword());
-            userData.put("expDate", picked.getExpDate());
-            userData.put("modDate", picked.getModifyDate());
-            userData.put("rotation", picked.getRotation());
+            //userData.put("expDate", picked.getExpDate());
+            //userData.put("modDate", picked.getModifyDate());
+            //userData.put("rotation", picked.getRotation());
             resList.add(userData);
         }
         try{

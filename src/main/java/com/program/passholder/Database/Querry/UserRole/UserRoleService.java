@@ -19,7 +19,7 @@ public class UserRoleService {
     }
 
     public Optional<UserRoleEntity> findByUserId(long idUser) {
-        return userRoleRepository.findRecordByUserId(idUser);
+        return userRoleRepository.findRecordByIdUser(idUser);
     }
 
     public List<UserRoleEntity> findAllByIdUser(long idUser) {
@@ -39,7 +39,7 @@ public class UserRoleService {
         if (userId <= 0 || newRoleId <= 0) {
             return false;
         }
-        return userRoleRepository.findRecordByUserId(userId)
+        return userRoleRepository.findRecordByIdUser(userId)
                 .map(userRole -> {
                     userRole.setIdRole(newRoleId);
                     return true;
@@ -48,11 +48,11 @@ public class UserRoleService {
     }
 
     @Transactional
-    public boolean changeUserRoleToDefaultUser(long userId) {
-        if (userId <= 0) {
+    public boolean changeUserRoleToDefaultUser(long idUser) {
+        if (idUser <= 0) {
             return false;
         }
-        return userRoleRepository.findRecordByUserId(userId)
+        return userRoleRepository.findRecordByIdUser(idUser)
                 .map(userRole -> {
                     userRole.setIdRole(1);
                     return true;

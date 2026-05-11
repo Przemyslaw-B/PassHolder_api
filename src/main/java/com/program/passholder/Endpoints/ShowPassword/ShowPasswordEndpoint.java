@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+/*
+
 @RestController
 @RequestMapping("/api")
 public class ShowPasswordEndpoint {
@@ -57,3 +59,4 @@ public class ShowPasswordEndpoint {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }
+*/

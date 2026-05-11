@@ -19,13 +19,13 @@ public class CreateNewRecordForUser {
         this.passwordRepository = passwordRepository;
     }
 
-    public long setNewPasswordRecordForUser(long userId, String url, String login, String password, Date expDate, Date modifyDate){
+    public long setNewPasswordRecordForUser(long userId, String url, String login, String password, Date modifyDate){
         PasswordEntity newRecord = new PasswordEntity();
         newRecord.setUserId(userId);
         newRecord.setUrl(url);
         newRecord.setLogin(login);
         newRecord.setPassword(password);
-        newRecord.setExpDate(expDate);
+        //newRecord.setExpDate(expDate);
         newRecord.setModifyDate(modifyDate);
         PasswordEntity savedPassword = passwordRepository.save(newRecord);
         return savedPassword.getId();   //Zwraca id_cloud zapisanego rekordu
