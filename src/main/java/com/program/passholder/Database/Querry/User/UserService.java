@@ -1,5 +1,6 @@
 package com.program.passholder.Database.Querry.User;
 
+import com.program.passholder.Database.Querry.User.User.SetPhoneNumber;
 import com.program.passholder.Database.Querry.User.User.SetSecurityPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class UserService {
     private final UserRepository userRepository;
     @Autowired
     SetSecurityPassword setSecurityPassword;
+    @Autowired
+    SetPhoneNumber setPhoneNumber;
 
     @Autowired
     public UserService(UserRepository userRepository){
@@ -89,6 +92,14 @@ public class UserService {
     public void setSecurityPassword(long userId, String securityPassword){
         setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
     }
+
+    public void setUserPhone(long userId, String phone){
+        setPhoneNumber.setUserPhoneNumber(userId, phone);
+    }
+    public void setUserPhone(String mail, String phone){
+        setPhoneNumber.setUserPhoneNumber(mail, phone);
+    }
+
 
     public boolean isUserExist(String email){
         String get = userRepository.findByEmail(email)

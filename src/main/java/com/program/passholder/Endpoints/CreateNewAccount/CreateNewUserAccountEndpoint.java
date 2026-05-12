@@ -1,9 +1,7 @@
 package com.program.passholder.Endpoints.CreateNewAccount;
 
 import com.program.passholder.Database.Querry.User.User.CreateNewUser;
-import com.program.passholder.Database.Querry.User.UserRepository;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Endpoints.LoginCredentialsReceivingEndpoint.LoginRequest;
 import com.program.passholder.Session.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

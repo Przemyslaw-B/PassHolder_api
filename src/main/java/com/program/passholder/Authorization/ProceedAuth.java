@@ -21,11 +21,17 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey) {
         GenerateAuthKey generateAuthKey = new GenerateAuthKey();
         String generatedKey = generateAuthKey.generateKey();    //generowanie klucza
         setAuthKey.setAuthKey(email, generatedKey);             //Zapis wygenerowanego klucza
-        sendAuthKeyEmail(email, generatedKey);
+        //sendAuthKeyEmail(email, generatedKey);
+        sendAuthKey(email, generatedKey);
     }
 
     @Async
     void sendAuthKeyEmail(String email, String key){
         sendAuthKeyToUser.sendEmail(email, key);       //wysłanie email
+    }
+
+    @Async
+    void sendAuthKey(String email, String key){
+        sendAuthKeyToUser.send(email, key);
     }
 }

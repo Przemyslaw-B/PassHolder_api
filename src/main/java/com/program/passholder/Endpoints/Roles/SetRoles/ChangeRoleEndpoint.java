@@ -1,13 +1,9 @@
 package com.program.passholder.Endpoints.Roles.SetRoles;
 
-import com.program.passholder.Database.Querry.Password.RemoveFromStorage.RemoveRecordFromStorage;
 import com.program.passholder.Database.Querry.Roles.RoleEntity;
 import com.program.passholder.Database.Querry.Roles.RoleService;
-import com.program.passholder.Database.Querry.User.UserEntity;
-import com.program.passholder.Database.Querry.User.UserRepository;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
-import com.program.passholder.Endpoints.RemoveUserRecordFromStorage.RecordToRemoveDTO;
 import com.program.passholder.Endpoints.Roles.GetRoleFromUserMail;
 import com.program.passholder.Session.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
