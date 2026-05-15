@@ -34,6 +34,11 @@ public class UserService {
                 .map(UserEntity::getEmail)
                 .orElse(null);
     }
+    public String getNameById(long id){
+        return userRepository.findById(id)
+                .map(UserEntity::getName)
+                .orElse(null);
+    }
 
     public String getSecurityPasswordById(long id){
         return userRepository.findById(id)

@@ -34,7 +34,6 @@ public class GetLogs {
         String ip = null;
         Date fromDate = null;
         Date toDate = null;
-
         if(data.get("typeName")!=null){
             Optional<Integer> typeOpt = eventService.getIdByName(data.get("typeName").toString());
             if(typeOpt.isPresent()){
@@ -52,11 +51,11 @@ public class GetLogs {
         }
         if(data.get("fromDate") != null){
             fromDate = (Date) data.get("fromDate");
-            System.out.println("fromDate: " + fromDate);
+            //System.out.println("fromDate: " + fromDate);
         }
         if(data.get("toDate")!=null){
             toDate = (Date) data.get("toDate");
-            System.out.println("toDate: " + toDate);
+            //System.out.println("toDate: " + toDate);
         }
 
         Specification<LogEntity> spec = Specification.unrestricted();

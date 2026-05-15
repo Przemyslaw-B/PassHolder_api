@@ -1,8 +1,7 @@
-package com.program.passholder.Endpoints.Storage.GetUserStorageEndpoint.GetUserStorageEndpoint;
+package com.program.passholder.Endpoints.Storage.GetUserStorageEndpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.program.passholder.Database.Querry.Password.PasswordEntity;
-import com.program.passholder.Database.Querry.Password.PasswordRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

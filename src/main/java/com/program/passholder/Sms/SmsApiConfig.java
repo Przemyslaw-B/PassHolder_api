@@ -1,25 +1,20 @@
 package com.program.passholder.Sms;
 
+import com.twilio.Twilio;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class SmsApiConfig {
+    @Value("${twilio.account-sid}")
+    private String accountSid;
 
-    @Bean
-    public WebClient smsApiWebClient(
-            @Value("${smsapi.token}") String token
-    ) {
+    @Value("${twilio.auth-token}")
+    private String authToken;
 
-        return WebClient.builder()
-                .baseUrl("https://api.smsapi.pl")
-                .defaultHeader(
-                        HttpHeaders.AUTHORIZATION,
-                        "Bearer " + token
-                )
-                .build();
+    @PostConstruct
+    public void init() {
+        Twilio.init(accountSid, authToken);
     }
 }

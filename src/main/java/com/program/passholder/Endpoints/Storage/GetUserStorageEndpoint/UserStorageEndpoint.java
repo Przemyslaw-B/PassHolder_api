@@ -1,4 +1,4 @@
-package com.program.passholder.Endpoints.Storage.GetUserStorageEndpoint.GetUserStorageEndpoint;
+package com.program.passholder.Endpoints.Storage.GetUserStorageEndpoint;
 
 import com.program.passholder.Database.Querry.User.User.GetUserFromMail;
 import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
