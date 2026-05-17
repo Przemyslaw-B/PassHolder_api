@@ -1,11 +1,10 @@
-package com.program.passholder.Endpoints.Filters.GetFiltersData;
+package com.program.passholder.Endpoints.Filters.GetLogFiltersData;
 
 import com.program.passholder.Admins.GetAllAdminsDetails;
 import com.program.passholder.Database.Querry.AuditLogs.Events.EventEntity;
 import com.program.passholder.Database.Querry.AuditLogs.Events.EventService;
 import com.program.passholder.Database.Querry.Roles.RoleService;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
-import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
 import com.program.passholder.Session.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class GetFiltersDataEndpoint {
     @Autowired
     EventService eventService;
 
-    @GetMapping("/getFiltersData")
+    @GetMapping("/getAuditFiltersData")
     public ResponseEntity<Map<String, Object>> GetFiltersData(
             @RequestHeader("Authorization") String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

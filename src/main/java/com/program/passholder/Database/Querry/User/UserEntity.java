@@ -11,7 +11,6 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="email")
-    @Convert(converter = EncryptionConverter.class)
     private String email;
     @Column(name="password")
     @Convert(converter = EncryptionConverter.class)

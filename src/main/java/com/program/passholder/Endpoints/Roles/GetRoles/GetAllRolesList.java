@@ -39,10 +39,10 @@ public class GetAllRolesList {
             List<RoleEntity> roleEntityList = roleService.getAll();
             for (RoleEntity roleEntity : roleEntityList) {
                 String tempName = roleEntity.getName();
-                System.out.println("Pobieram nazwę:" + tempName);
+                //System.out.println("Pobieram nazwę:" + tempName);
                 if(!tempName.equals("master") && !tempName.equals("user")){
                     roleList.add(tempName);
-                    System.out.println("Nazwa dodana do listy");
+                    //System.out.println("Nazwa dodana do listy");
                 }
             }
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "roles", roleList));
