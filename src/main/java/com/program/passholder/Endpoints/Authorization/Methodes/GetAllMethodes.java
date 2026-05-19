@@ -1,5 +1,6 @@
 package com.program.passholder.Endpoints.Authorization.Methodes;
 
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.AuthenticationMethodes.AuthenticationMethodesEntity;
 import com.program.passholder.Database.Querry.AuthenticationMethodes.AuthenticationMethodesRepository;
 import com.program.passholder.Database.Querry.AuthenticationMethodes.AuthenticationMethodesService;
@@ -8,6 +9,7 @@ import com.program.passholder.Database.Querry.UserRole.UserRoleEntity;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
 import com.program.passholder.Roles.GetRoleDetailsOfUsers;
 import com.program.passholder.Session.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import java.util.Map;
 @RequestMapping("/api")
 public class GetAllMethodes {
     @Autowired
+    SetNewLog setNewLog;
+    @Autowired
     JwtUtil jwtUtil;
     @Autowired
     GetFromMail getFromMail;
@@ -33,7 +37,15 @@ public class GetAllMethodes {
     @GetMapping("/getAllAuthenticationMethodes")
 
     public ResponseEntity<Map<String, Object>> getAllMethodes(
-            @RequestHeader("Authorization") String authHeader){
+            @RequestHeader("Authorization") String authHeader,
+            HttpServletRequest httpRequest){
+        String ip = httpRequest.getHeader("X-Forwarded-For");
+        if (ip != null && !ip.isEmpty()) {
+            ip = ip.split(",")[0];
+        } else {
+            ip = httpRequest.getRemoteAddr();
+        }
+
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             //System.out.println("API ROLE ENDPOINT!");
             String token = authHeader.substring(7);
@@ -52,6 +64,7 @@ public class GetAllMethodes {
             }
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "methodes", list));
         }
+        setNewLog.setLog(12,ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

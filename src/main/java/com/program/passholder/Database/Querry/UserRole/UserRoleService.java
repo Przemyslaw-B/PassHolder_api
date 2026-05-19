@@ -34,6 +34,14 @@ public class UserRoleService {
         return userRoleRepository.findBySettedBy(settedBy);
     }
 
+    public Optional<Integer> getRoleIdByUserId(long idUser) {
+        Optional<UserRoleEntity> entity = userRoleRepository.findRecordByIdUser(idUser);
+        if(entity.isPresent()) {
+            return Optional.of(entity.get().getIdRole());
+        }
+        return Optional.empty();
+    }
+
     @Transactional
     public boolean changeUserRole(long userId, int newRoleId) {
         if (userId <= 0 || newRoleId <= 0) {

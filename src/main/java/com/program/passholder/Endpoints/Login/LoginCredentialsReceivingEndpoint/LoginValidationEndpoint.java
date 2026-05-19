@@ -2,10 +2,12 @@ package com.program.passholder.Endpoints.Login.LoginCredentialsReceivingEndpoint
 
 import com.program.passholder.Authorization.IsAuthorized;
 import com.program.passholder.Authorization.ProceedAuth;
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.*;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
 import com.program.passholder.Session.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,21 @@ public class LoginValidationEndpoint {
     IsAuthorized isAuthorized;
     @Autowired
     UserService userService;
+    @Autowired
+    SetNewLog setNewLog;
 
     @PostMapping("/userValidation")
-public ResponseEntity<Map<String, Object>> isUserValidEndpoint(@RequestBody LoginRequest request){
+public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
+        @RequestBody LoginRequest request,
+        HttpServletRequest httpRequest){
+
+        String ip = httpRequest.getHeader("X-Forwarded-For");
+        if (ip != null && !ip.isEmpty()) {
+            ip = ip.split(",")[0];
+        } else {
+            ip = httpRequest.getRemoteAddr();
+        }
+
         //System.out.println("Weryfikacja Usera");
         String email = request.getEmail();
         String password = request.getPassword();
@@ -62,6 +76,7 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(@RequestBody Logi
             //return ResponseEntity.ok(Map.of("status", "Validated","username", username, "token",token, "auth", auth));
             return ResponseEntity.ok(Map.of("status", "Validated","data", data));
         }
+        setNewLog.setLog(4,ip, userId);
         return ResponseEntity.ok(Map.of("status", "Invalid"));
     }
 

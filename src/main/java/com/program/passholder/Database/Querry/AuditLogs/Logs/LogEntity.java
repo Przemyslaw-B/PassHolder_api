@@ -1,6 +1,7 @@
 package com.program.passholder.Database.Querry.AuditLogs.Logs;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -20,7 +21,8 @@ public class LogEntity {
     private long idRecord;
     @Column(name="ip")
     private String ip;
-    @Column(name="timestamp")
+    @Column(name = "timestamp", nullable = false, updatable = false)
+    @CreationTimestamp
     private Timestamp timestamp;
     @Column(name="details")
     private String details;

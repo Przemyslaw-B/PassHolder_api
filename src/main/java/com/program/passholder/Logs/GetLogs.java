@@ -6,6 +6,7 @@ import com.program.passholder.Database.Querry.AuditLogs.Logs.LogRepository;
 import com.program.passholder.Database.Querry.AuditLogs.Logs.LogService;
 import com.program.passholder.Database.Querry.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -77,7 +78,7 @@ public class GetLogs {
         if(toDate != null){
             spec = spec.and(logService.hasDateBefore(toDate));
         }
-        logList = logRepository.findAll(spec);
+        logList = logRepository.findAll(spec, Sort.by(Sort.Direction.DESC, "timestamp"));
         return logList;
     }
 

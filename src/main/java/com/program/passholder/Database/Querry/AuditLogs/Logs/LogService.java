@@ -3,6 +3,7 @@ package com.program.passholder.Database.Querry.AuditLogs.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ public class LogService {
         return logRepository.findAllByIp(ip);
     }
 
+    @Transactional
     public void setNewLog(int idEvent, long idUser, String ip, String details) {
         LogEntity entity = new LogEntity();
         entity.setIdEvent(idEvent);
@@ -48,6 +50,45 @@ public class LogService {
         logRepository.save(entity);
     }
 
+    @Transactional
+    public void setNewLog(int idEvent,String ip) {
+        LogEntity entity = new LogEntity();
+        entity.setIdEvent(idEvent);
+        entity.setIp(ip);
+        logRepository.save(entity);
+    }
+
+    @Transactional
+    public void setNewLog(int idEvent, String ip, long idUser, long settedBy, long idRecord) {
+        LogEntity entity = new LogEntity();
+        entity.setIdEvent(idEvent);
+        entity.setIp(ip);
+        entity.setUserId(idUser);
+        entity.setSettedBy(settedBy);
+        entity.setIdRecord(idRecord);
+        logRepository.save(entity);
+    }
+
+    @Transactional
+    public void setNewLog(int idEvent, String ip, long idUser) {
+        LogEntity entity = new LogEntity();
+        entity.setIdEvent(idEvent);
+        entity.setIp(ip);
+        entity.setUserId(idUser);
+        logRepository.save(entity);
+    }
+
+    @Transactional
+    public void setNewLog(int idEvent, String ip, long idUser, long settedBy) {
+        LogEntity entity = new LogEntity();
+        entity.setIdEvent(idEvent);
+        entity.setIp(ip);
+        entity.setUserId(idUser);
+        entity.setSettedBy(settedBy);
+        logRepository.save(entity);
+    }
+
+    @Transactional
     public void setNewLog(int idEvent, String ip, String details) {
         LogEntity entity = new LogEntity();
         entity.setIdEvent(idEvent);
@@ -57,6 +98,7 @@ public class LogService {
         }
         logRepository.save(entity);
     }
+
 
     public static Specification<LogEntity> hasType(Integer type) {
         return (root, query, cb) ->
