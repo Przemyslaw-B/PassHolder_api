@@ -1,28 +1,55 @@
 package com.program.passholder.Authorization;
 
 import com.program.passholder.Database.Querry.User.Authentication.SetAuthKey;
+import com.program.passholder.Database.Querry.User.UserEntity;
+import com.program.passholder.Database.Querry.User.UserService;
+import com.program.passholder.GoogleAuthenticator.TOTPService;
+import com.program.passholder.Sms.SmsVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class ProceedAuth {
 SendAuthKeyToUser sendAuthKeyToUser;
 SetAuthKey setAuthKey;
+SmsVerifyService smsVerifyService;
+UserService userService;
+TOTPService totpService;
 
 @Autowired
-public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey) {
+public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, SmsVerifyService smsVerifyService, UserService userService, TOTPService totpService) {
     this.sendAuthKeyToUser = sendAuthKeyToUser;
     this.setAuthKey = setAuthKey;
+    this.smsVerifyService = smsVerifyService;
+    this.userService = userService;
+    this.totpService = totpService;
 }
 
     @Async
     public void proceed(String email){
-        GenerateAuthKey generateAuthKey = new GenerateAuthKey();
-        String generatedKey = generateAuthKey.generateKey();    //generowanie klucza
-        setAuthKey.setAuthKey(email, generatedKey);             //Zapis wygenerowanego klucza
-        //sendAuthKeyEmail(email, generatedKey);
-        sendAuthKey(email, generatedKey);
+        Optional<UserEntity> userEntity = userService.getEntityByMail(email);
+        if(userEntity.isPresent()){
+            int authMehode = userEntity.get().getNotificationMethod();
+
+            switch(authMehode) {
+                case 1: //EMAIL
+                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
+                    String generatedKey = generateAuthKey.generateKey();
+                    setAuthKey.setAuthKey(email, generatedKey);
+                    sendAuthKey(email, generatedKey);
+                    break;
+                case 2: //SMS
+                    String userPhone = userEntity.get().getPhone();
+                    smsVerifyService.sendVerificationCode(userPhone);
+                    break;
+                case 3: //GOOGLE AUTH
+                    totpService.setSecret(email);
+                    break;
+            }
+        }
     }
 
     @Async
@@ -34,4 +61,10 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey) {
     void sendAuthKey(String email, String key){
         sendAuthKeyToUser.send(email, key);
     }
+
+    @Async
+    void sendAuthKeySms(String phone){
+        smsVerifyService.sendVerificationCode(phone);
+    }
+
 }

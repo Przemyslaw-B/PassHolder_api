@@ -5,7 +5,9 @@ import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.*;
 import com.program.passholder.Database.Querry.User.UserEntity;
+import com.program.passholder.Database.Querry.User.UserRepository;
 import com.program.passholder.Database.Querry.User.UserService;
+import com.program.passholder.GoogleAuthenticator.TOTPService;
 import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
 import com.program.passholder.Session.JwtUtil;
 import com.program.passholder.Sms.SmsVerifyService;
@@ -41,6 +43,10 @@ public class LoginValidationEndpoint {
     GetFromMail getFromMail;
     @Autowired
     SmsVerifyService smsVerifyService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    TOTPService totpService;
 
     @PostMapping("/userValidation")
 public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
@@ -60,7 +66,6 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
         if(!userService.isUserExist(email)){
             return ResponseEntity.ok(Map.of("status", "Invalid"));
         }
-
         String username = getUserFromMail.getUserFromMail(email);
         long userId = getFromMail.getUserIdFromMail(email);
         String securityPassword = userService.getSecurityPasswordById(userId);
@@ -71,6 +76,7 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
             boolean authorized = isAuthorized.isAuthorized(email);
             String auth = Boolean.toString(authorized);
             String userPhone = userEntity.get().getPhone();
+            String qrCode = "";
 
             HashMap<String, Object> data = new HashMap<>();
             data.put("username", username);
@@ -78,15 +84,13 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
             data.put("securityPassword", securityPassword);
             data.put("auth", auth);
             data.put("status", "Validated");
-            switch(userAuthMethode){
-                case 1:
-                    proceedAuth.proceed(email);
-                    break;
-                case 2:
-                    smsVerifyService.sendVerificationCode(userPhone);
-                    break;
+
+            proceedAuth.proceed(email); //wyślij wiadomość do usera
+
+            if(userAuthMethode == 3){
+                qrCode = totpService.getQrCode(email);
             }
-            return ResponseEntity.ok(Map.of("status", "Validated","data", data));
+            return ResponseEntity.ok(Map.of("status", "Validated","data", data, "authMethode", userAuthMethode, "qrCode", qrCode));
         }
         setNewLog.setLog(4,ip, userId);
         return ResponseEntity.ok(Map.of("status", "Invalid"));

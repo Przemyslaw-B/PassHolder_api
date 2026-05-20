@@ -3,14 +3,36 @@ package com.program.passholder.Sms;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @ConfigurationProperties(prefix = "twilio")
-@Getter
-@Setter
 public class SmsProperties {
     private String accountSid;
     private String authToken;
     private String verifyServiceSid;
+
+    public String getAccountSid() {
+        return accountSid;
+    }
+
+    public void setAccountSid(String accountSid) {
+        this.accountSid = accountSid;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public String getVerifyServiceSid() {
+        return verifyServiceSid;
+    }
+
+    public void setVerifyServiceSid(String verifyServiceSid) {
+        this.verifyServiceSid = verifyServiceSid;
+    }
 }

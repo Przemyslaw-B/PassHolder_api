@@ -2,14 +2,18 @@ package com.program.passholder.Sms;
 
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class SmsVerifyService {
 
     private final SmsProperties properties;
+
+    @Autowired
+    SmsVerifyService(SmsProperties properties) {
+        this.properties = properties;
+    }
 
     public void sendVerificationCode(String phoneNumber) {
 

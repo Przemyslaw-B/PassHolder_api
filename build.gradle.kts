@@ -28,7 +28,7 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.38")   //limiter logowań i ip
     implementation("io.jsonwebtoken:jjwt-api:0.11.5") //JWT Tokeny
     implementation("org.springframework.boot:spring-boot-starter-mail") //obsługa email
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     //runtimeOnly("org.postgresql:postgresql")
@@ -36,6 +36,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("com.twilio.sdk:twilio:10.1.2") //SMS
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("dev.samstevens.totp:totp:1.7.1")    //google auth
 }
 
 tasks.withType<Test> {

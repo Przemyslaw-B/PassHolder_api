@@ -44,8 +44,10 @@ public class UserEntity {
     @Column(name="security_password")
     @Convert(converter = EncryptionConverter.class)
     private String security_password;
-    @Column(name="notification_method")
+    @Column(name = "notification_method", nullable = false, updatable = false)
     private int notificationMethod;
+    @Column(name="totp_secret")
+    private String totpSecret;
 
     public Long getId() {return id;}
     //public void setId(Long id) {this.id = id;}
@@ -91,4 +93,7 @@ public class UserEntity {
 
     public int getNotificationMethod() {return notificationMethod;}
     public void setNotificationMethod(int notificationMethod) {this.notificationMethod = notificationMethod;}
+
+    public String getTotpSecret() {return totpSecret;}
+    public void setTotpSecret(String totpSecret) {this.totpSecret = totpSecret;}
 }
