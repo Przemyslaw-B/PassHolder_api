@@ -8,6 +8,7 @@ import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Database.Querry.UserRole.UserRoleEntity;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
 import com.program.passholder.Session.JwtUtil;
+import com.program.passholder.Sms.SmsVerifyService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,10 @@ public class AuthorizationEndpoint {
     UserRoleService userRoleService;
     @Autowired
     SetNewLog setNewLog;
+    @Autowired
+    UserService userService;
+    @Autowired
+    SmsVerifyService smsVerifyService;
 
     @PostMapping("2FA")
     public ResponseEntity<Map<String, Object>> authorization(
@@ -48,6 +53,7 @@ public class AuthorizationEndpoint {
             String token = authHeader.substring(7);
             if (token != null && jwtUtil.validateToken(token)) {
                 String userEmail = jwtUtil.extractUsername(token);
+                Optional<UserEntity> userEntity = userService.getEntityByMail(userEmail);
                 long userId = getFromMail.getUserIdFromMail(userEmail);
                 Optional<UserRoleEntity> entity = userRoleService.findByUserId(userId);
                 int userRole=0;
@@ -55,16 +61,34 @@ public class AuthorizationEndpoint {
                     userRole = entity.get().getIdRole();
                 }
                 String authKey = requestBody.authKey;
-                //System.out.println("AUTH KEY: " + authKey);
-                if(validateAuthKey.validateAuthKey(userEmail, authKey)){    //weryfikacja poprawności podanego kodu 2fa
+                Boolean validationStatus = false;
+                if(userEntity.isPresent()){
+                    String userPhone = userEntity.get().getPhone();
+                    int authMethode = userEntity.get().getNotificationMethod();
+                    switch (authMethode) {
+                        case 1:
+                            if(validateAuthKey.validateAuthKey(userEmail, authKey)){
+                                validationStatus = true;
+                            } else{
+                                validationStatus = false;
+                            }
+                            break;
+                        case 2:
+                            if(smsVerifyService.verifyCode(userPhone, authKey)){
+                                validationStatus = true;
+                            }else{
+                                validationStatus = false;
+                            }
+                            break;
+                    }
+                }
+                if(validationStatus){    //weryfikacja poprawności podanego kodu 2fa
                     setNewLog.setLog(3,ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success", "role", userRole));
                 }else{
                     setNewLog.setLog(4,ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed"));
                 }
-                //
-                //return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success"));
             }
         }
         setNewLog.setLog(12,ip);

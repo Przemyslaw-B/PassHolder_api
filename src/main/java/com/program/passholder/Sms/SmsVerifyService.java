@@ -2,18 +2,19 @@ package com.program.passholder.Sms;
 
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SmsVerificationService {
-    @Value("${twilio.verify-service-sid}")
-    private String verifyServiceSid;
+@RequiredArgsConstructor
+public class SmsVerifyService {
+
+    private final SmsProperties properties;
 
     public void sendVerificationCode(String phoneNumber) {
 
         Verification.creator(
-                verifyServiceSid,
+                properties.getVerifyServiceSid(),
                 phoneNumber,
                 "sms"
         ).create();
@@ -22,7 +23,7 @@ public class SmsVerificationService {
     public boolean verifyCode(String phoneNumber, String code) {
 
         VerificationCheck verificationCheck =
-                VerificationCheck.creator(verifyServiceSid)
+                VerificationCheck.creator(properties.getVerifyServiceSid())
                         .setTo(phoneNumber)
                         .setCode(code)
                         .create();
@@ -30,4 +31,3 @@ public class SmsVerificationService {
         return "approved".equals(verificationCheck.getStatus());
     }
 }
-
