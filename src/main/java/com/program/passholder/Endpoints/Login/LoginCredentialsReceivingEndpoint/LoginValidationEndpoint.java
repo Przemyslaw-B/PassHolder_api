@@ -78,19 +78,12 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
             String userPhone = userEntity.get().getPhone();
             String qrCode = "";
 
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("username", username);
-            data.put("token", token);
-            data.put("securityPassword", securityPassword);
-            data.put("auth", auth);
-            data.put("status", "Validated");
-
             proceedAuth.proceed(email); //wyślij wiadomość do usera
 
             if(userAuthMethode == 3){
                 qrCode = totpService.getQrCode(email);
             }
-            return ResponseEntity.ok(Map.of("status", "Validated","data", data, "authMethode", userAuthMethode, "qrCode", qrCode));
+            return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode, "qrCode", qrCode));
         }
         setNewLog.setLog(4,ip, userId);
         return ResponseEntity.ok(Map.of("status", "Invalid"));

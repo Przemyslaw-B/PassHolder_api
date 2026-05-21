@@ -25,7 +25,7 @@ public class ValidateAuthKey {
         this.totpService = totpService;
     }
 
-    public boolean validateAuthKey(String email, String userAuthKey){
+    public boolean validate(String email, String userAuthKey){
         boolean isValidated = false;
         Optional<UserEntity> userEntity = userService.getEntityByMail(email);
         if(userEntity.isPresent()){
@@ -40,8 +40,29 @@ public class ValidateAuthKey {
                     isValidated=validatePhone(userPhone,  userAuthKey);
                     break;
                 case 3:
-                    isValidated = totpService.verifyCode(email,  userAuthKey);
+                    isValidated = validateTOTP(email,  userAuthKey);
                     break;
+            }
+        }
+        return isValidated;
+    }
+
+    public boolean validateMethode(String email, int methodeId, String userAuthKey){
+        boolean isValidated = false;
+        Optional<UserEntity> userEntity = userService.getEntityByMail(email);
+        if(userEntity.isPresent()) {
+            switch (methodeId) {
+                case 1:
+                    isValidated = validateEmail(email, userAuthKey);
+                    break;
+                case 2:
+                    String userPhone = userEntity.get().getPhone();
+                    isValidated = validatePhone(userPhone, userAuthKey);
+                    break;
+                case 3:
+                    isValidated = validateTOTP(email, userAuthKey);
+                    break;
+
             }
         }
         return isValidated;
@@ -64,6 +85,14 @@ public class ValidateAuthKey {
             validated = smsVerifyService.verifyCode(userPhone, userAuthKey);
         }
         return validated;
+    }
+
+    private boolean validateTOTP(String email, String userAuthKey){
+        if(email == null && userAuthKey == null){ return false;}
+        if(totpService.verifyCode(email, userAuthKey)){
+            return true;
+        }
+        return false;
     }
 
 

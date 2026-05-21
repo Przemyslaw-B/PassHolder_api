@@ -42,20 +42,36 @@ public class TOTPService {
         );
     }
 
-    public boolean verifyCode(String email, String code){
+    public boolean verifyCode(String email, String code) {
         Optional<UserEntity> userEntity = userService.getEntityByMail(email);
-        if(userEntity.isEmpty()) {
+        if (userEntity.isEmpty()) {
             return false;
         }
         String secret = userEntity.get().getTotpSecret();
-        if(secret == null) {return false;}
-        CodeGenerator codeGenerator = new DefaultCodeGenerator();
-        TimeProvider timeProvider = new SystemTimeProvider();
-        CodeVerifier verifier = new DefaultCodeVerifier(
-                codeGenerator,
-                timeProvider
-        );
-        return verifier.isValidCode(secret, code);
+        if (secret == null) {
+            return false;
+        }
+        try {
+            CodeGenerator codeGenerator = new DefaultCodeGenerator();
+            TimeProvider timeProvider = new SystemTimeProvider();
+            DefaultCodeVerifier verifier = new DefaultCodeVerifier(
+                    codeGenerator,
+                    timeProvider
+            );
+            verifier.setAllowedTimePeriodDiscrepancy(1);
+            long time = timeProvider.getTime();
+            String generatedCode = codeGenerator.generate(secret, time);
+            System.out.println("SECRET: " + secret);
+            System.out.println("USER CODE: " + code);
+            System.out.println("GENERATED CODE: " + generatedCode);
+            System.out.println("TIME: " + time);
+            System.out.println("Secret: " + secret + ", code: " + code);
+            System.out.println("Verification: " + verifier.isValidCode(secret, code));
+            return verifier.isValidCode(secret, code);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

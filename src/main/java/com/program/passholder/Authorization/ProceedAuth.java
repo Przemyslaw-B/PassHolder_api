@@ -46,7 +46,33 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
                     smsVerifyService.sendVerificationCode(userPhone);
                     break;
                 case 3: //GOOGLE AUTH
-                    totpService.setSecret(email);
+                    if(userEntity.get().getTotpSecret()==null){
+                        totpService.setSecret(email);
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Async
+    public void sendKeyToPickedMethode(String email, int methodeId){
+        Optional<UserEntity> userEntity = userService.getEntityByMail(email);
+        if(userEntity.isPresent()){
+            switch(methodeId) {
+                case 1: //EMAIL
+                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
+                    String generatedKey = generateAuthKey.generateKey();
+                    setAuthKey.setAuthKey(email, generatedKey);
+                    sendAuthKey(email, generatedKey);
+                    break;
+                case 2: //SMS
+                    String userPhone = userEntity.get().getPhone();
+                    smsVerifyService.sendVerificationCode(userPhone);
+                    break;
+                case 3: //GOOGLE AUTH
+                    if(userEntity.get().getTotpSecret()==null){
+                        totpService.setSecret(email);
+                    }
                     break;
             }
         }
