@@ -79,7 +79,7 @@ public class ValidateAuthKey {
         return false;
     }
 
-    private boolean validatePhone(String userPhone, String userAuthKey){
+    public boolean validatePhone(String userPhone, String userAuthKey){
         boolean validated = false;
         if(userPhone != null && userAuthKey != null){
             validated = smsVerifyService.verifyCode(userPhone, userAuthKey);

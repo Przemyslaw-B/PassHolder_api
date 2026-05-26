@@ -1,6 +1,7 @@
 package com.program.passholder.Endpoints.UserSettingsEndpoints.UserPhone.UserPhone.RequestPhoneActivationKey;
 
 import com.program.passholder.Authorization.GenerateAuthKey;
+import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Database.Querry.User.Authentication.SetAuthKey;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Session.JwtUtil;
@@ -21,7 +22,7 @@ public class RequestUserPhoneActivationKeyEndpoint {
     @Autowired
     UserService userService;
     @Autowired
-    SetAuthKey setAuthKey;
+    ProceedAuth proceedAuth;
 
     @PostMapping("/requestPhoneActivationKey")
     public ResponseEntity<Map<String, Object>> activate(
@@ -32,9 +33,7 @@ public class RequestUserPhoneActivationKeyEndpoint {
             if(token!=null && jwtUtil.validateToken(token)) {
                 if(request.phone!=null){
                     String email = jwtUtil.extractUsername(token);
-                    String randomCode = generateAuthKey.generateKey();
-                    setAuthKey.setAuthKey(email, randomCode);
-                    //TODO wysyłanie SMS z kodem
+                    proceedAuth.sendAuthKeySms(request.phone);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
                 } else{
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "empty number"));

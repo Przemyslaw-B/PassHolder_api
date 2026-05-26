@@ -16,7 +16,7 @@ public class UserEntity {
     @Convert(converter = EncryptionConverter.class)
     private String password;
     @Column(name="phone")
-    @Convert(converter = EncryptionConverter.class)
+    //@Convert(converter = EncryptionConverter.class)
     private String phone;
     @Column(name="public_key")
     @Convert(converter = EncryptionConverter.class)
@@ -44,7 +44,7 @@ public class UserEntity {
     @Column(name="security_password")
     @Convert(converter = EncryptionConverter.class)
     private String security_password;
-    @Column(name = "notification_method", nullable = false, updatable = false)
+    @Column(name = "notification_method")
     private int notificationMethod;
     @Column(name="totp_secret")
     private String totpSecret;

@@ -5,6 +5,7 @@ import com.program.passholder.Database.Querry.User.User.SetSecurityPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -97,6 +98,13 @@ public class UserService {
 
     public void setSecurityPassword(long userId, String securityPassword){
         setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
+    }
+
+    @Transactional
+    public void setAuthMethode(long userId, int methodeId){
+        userRepository.findById(userId).ifPresent(user->{
+            user.setNotificationMethod(methodeId);
+        });
     }
 
     public void setUserPhone(long userId, String phone){

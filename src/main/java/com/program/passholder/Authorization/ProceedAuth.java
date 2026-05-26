@@ -35,12 +35,6 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
             int authMehode = userEntity.get().getNotificationMethod();
 
             switch(authMehode) {
-                case 1: //EMAIL
-                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
-                    String generatedKey = generateAuthKey.generateKey();
-                    setAuthKey.setAuthKey(email, generatedKey);
-                    sendAuthKey(email, generatedKey);
-                    break;
                 case 2: //SMS
                     String userPhone = userEntity.get().getPhone();
                     smsVerifyService.sendVerificationCode(userPhone);
@@ -49,6 +43,12 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
                     if(userEntity.get().getTotpSecret()==null){
                         totpService.setSecret(email);
                     }
+                    break;
+                default:    //EMAIL by default
+                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
+                    String generatedKey = generateAuthKey.generateKey();
+                    setAuthKey.setAuthKey(email, generatedKey);
+                    sendAuthKey(email, generatedKey);
                     break;
             }
         }
@@ -59,12 +59,6 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
         Optional<UserEntity> userEntity = userService.getEntityByMail(email);
         if(userEntity.isPresent()){
             switch(methodeId) {
-                case 1: //EMAIL
-                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
-                    String generatedKey = generateAuthKey.generateKey();
-                    setAuthKey.setAuthKey(email, generatedKey);
-                    sendAuthKey(email, generatedKey);
-                    break;
                 case 2: //SMS
                     String userPhone = userEntity.get().getPhone();
                     smsVerifyService.sendVerificationCode(userPhone);
@@ -73,6 +67,12 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
                     if(userEntity.get().getTotpSecret()==null){
                         totpService.setSecret(email);
                     }
+                    break;
+                default:    //default EMAIL
+                    GenerateAuthKey generateAuthKey = new GenerateAuthKey();
+                    String generatedKey = generateAuthKey.generateKey();
+                    setAuthKey.setAuthKey(email, generatedKey);
+                    sendAuthKey(email, generatedKey);
                     break;
             }
         }
@@ -89,7 +89,7 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
     }
 
     @Async
-    void sendAuthKeySms(String phone){
+    public void sendAuthKeySms(String phone){
         smsVerifyService.sendVerificationCode(phone);
     }
 

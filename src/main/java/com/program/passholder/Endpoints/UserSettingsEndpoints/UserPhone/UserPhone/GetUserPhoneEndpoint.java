@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,8 +32,8 @@ public class GetUserPhoneEndpoint {
     @Autowired
     private GetFromMail getFromMail;
 
-    @PostMapping("/getUserPhone")
-    public ResponseEntity<Map<String, String>> getKey(
+    @GetMapping("/getUserPhone")
+    public ResponseEntity<Map<String, Object>> getKey(
             @RequestHeader("Authorization") String authHeader,
             HttpServletRequest httpRequest) {
 
@@ -56,10 +57,12 @@ public class GetUserPhoneEndpoint {
                 }
 
                 Optional<UserEntity> entity = userService.getEntityByMail(email);
+                HashMap<String, String> map = new HashMap<>();
                 if(entity.isPresent()){
                     String phone = entity.get().getPhone();
+                    map.put("phone", phone);
                     setNewLog.setLog(24, ip, userId);
-                    return ResponseEntity.ok(Map.of("status", "ok", "phone", phone));
+                    return ResponseEntity.ok(Map.of("status", "ok", "data", map));
                 } else{
                     return ResponseEntity.ok(Map.of("status", "ok", "error", "user not found"));
                 }

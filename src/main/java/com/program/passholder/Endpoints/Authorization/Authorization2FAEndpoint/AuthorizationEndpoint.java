@@ -37,7 +37,7 @@ public class AuthorizationEndpoint {
     @Autowired
     SmsVerifyService smsVerifyService;
 
-    @PostMapping("2FA")
+    @PostMapping("/2FA")
     public ResponseEntity<Map<String, Object>> authorization(
             @RequestBody AuthKeyDTO requestBody,
             HttpServletRequest httpRequest) {
