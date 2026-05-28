@@ -39,8 +39,6 @@ public class UserEntity {
     private String emailActivator;
     @Column(name="is_activated")
     private int isActivated;
-    @Column(name="default_rotation")
-    private int rotation;
     @Column(name="security_password")
     @Convert(converter = EncryptionConverter.class)
     private String security_password;
@@ -84,9 +82,6 @@ public class UserEntity {
 
     public int getIsActivated() {return isActivated;}
     public void setIsActivated(int isActivated) {this.isActivated = isActivated;}
-
-    public int getRotation() {return rotation;}
-    public void setRotation(int rotation) {this.rotation = rotation;}
 
     public String getSecurity_password() {return security_password;}
     public void setSecurity_password(String security_password) {this.security_password = security_password;}

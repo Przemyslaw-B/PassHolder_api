@@ -14,10 +14,6 @@ public class UserRoleService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    public Optional<UserRoleEntity> findById(long id) {
-        return userRoleRepository.findById(id);
-    }
-
     public Optional<UserRoleEntity> findByUserId(long idUser) {
         return userRoleRepository.findRecordByIdUser(idUser);
     }

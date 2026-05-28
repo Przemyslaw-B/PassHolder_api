@@ -3,6 +3,7 @@ package com.program.passholder.Endpoints.Login.LoginCredentialsReceivingEndpoint
 import com.program.passholder.Authorization.IsAuthorized;
 import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
+import com.program.passholder.Database.Querry.Password.PasswordService;
 import com.program.passholder.Database.Querry.User.User.*;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserRepository;
@@ -23,12 +24,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class LoginValidationEndpoint {
-    @Autowired
-    ValidationUser validationUser;
+
     @Autowired
     GetUserFromMail getUserFromMail;
-    @Autowired
-    GetUserTokenFromMail getUserTokenFromMail;
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
@@ -42,11 +40,8 @@ public class LoginValidationEndpoint {
     @Autowired
     GetFromMail getFromMail;
     @Autowired
-    SmsVerifyService smsVerifyService;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    TOTPService totpService;
+    ValidationUser validationUser;
+
 
     @PostMapping("/userValidation")
 public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
@@ -68,22 +63,18 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
         }
         String username = getUserFromMail.getUserFromMail(email);
         long userId = getFromMail.getUserIdFromMail(email);
-        String securityPassword = userService.getSecurityPasswordById(userId);
+        //String securityPassword = userService.getSecurityPasswordById(userId);
         Optional<UserEntity> userEntity = userService.getEntityByid(userId);
         if (userEntity.isPresent()){
-            int userAuthMethode = userEntity.get().getNotificationMethod();
-            String token = jwtUtil.generateToken(email);
-            boolean authorized = isAuthorized.isAuthorized(email);
-            String auth = Boolean.toString(authorized);
-            String userPhone = userEntity.get().getPhone();
-            String qrCode = "";
-
-            proceedAuth.proceed(email); //wyślij wiadomość do usera
-
-            if(userAuthMethode == 3){
-                qrCode = totpService.getQrCode(email);
+            if(validationUser.validateUser(email, password)){
+                int userAuthMethode = userEntity.get().getNotificationMethod();
+                //String token = jwtUtil.generateToken(email);
+                boolean authorized = isAuthorized.isAuthorized(email);
+                //String auth = Boolean.toString(authorized);
+                proceedAuth.proceed(email); //wyślij wiadomość do usera
+                return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode));
             }
-            return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode, "qrCode", qrCode));
+            return ResponseEntity.ok(Map.of("status", "Invalid"));
         }
         setNewLog.setLog(4,ip, userId);
         return ResponseEntity.ok(Map.of("status", "Invalid"));

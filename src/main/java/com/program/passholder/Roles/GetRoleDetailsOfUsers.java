@@ -20,7 +20,7 @@ public class GetRoleDetailsOfUsers {
         List<Object> detailsList = new ArrayList<>();
         if(list!=null && !list.isEmpty()){
             for(UserRoleEntity entity: list){
-                long id = entity.getId();
+                //long id = entity.getIdRole();
                 long userId = entity.getIdUser();
                 int roleId = entity.getIdRole();
                 long settedBy = entity.getSettedBy();
@@ -31,7 +31,7 @@ public class GetRoleDetailsOfUsers {
                     roleName = roleService.getById(roleId).get().getName();
                 }
                 Map<String,Object> map = new HashMap<>();
-                map.put("id",id);
+                map.put("id",roleId);
                 map.put("userMail",userMail);
                 map.put("adminMail",adminMail);
                 map.put("roleName",roleName);

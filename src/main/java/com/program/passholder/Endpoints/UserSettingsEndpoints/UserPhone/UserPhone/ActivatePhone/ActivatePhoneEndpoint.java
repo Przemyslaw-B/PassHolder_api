@@ -26,7 +26,7 @@ public class ActivatePhoneEndpoint {
             @RequestHeader("Authorization") String authHeader,
             @RequestBody ActivatePhoneDTO request){
 
-        System.out.println("numer: " + request.phone + ", code: " +  request.activationKey);
+        //System.out.println("numer: " + request.phone + ", code: " +  request.activationKey);
         if(authHeader!=null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
             if(token!=null && jwtUtil.validateToken(token)) {

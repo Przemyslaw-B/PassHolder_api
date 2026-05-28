@@ -28,10 +28,8 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable())   //TODO Wyłączone HTTP Basic Authentication - brak logowania przez przeglądarkę
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/update/check").permitAll()
-                        .requestMatchers("/update/download").permitAll()
+                        .requestMatchers("/api/update/**").permitAll()
                         .requestMatchers("/api/userValidation").permitAll()     //dostęp dla wszystkich tylko do procesu logowania
-                        //.requestMatchers("/api/GetPublicKey").permitAll()       //dostęp dla wszystkich do publicznego klucza (wymagany do przesłania danych logowania)
                         .requestMatchers("/api/CreateNewAccount").permitAll()  //dostęp dla wszystkich przy zakładaniu konta
                         .requestMatchers("/api/2FA").permitAll()
                         .anyRequest().authenticated())               // Cała reszta wymaga tokenu
