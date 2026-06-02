@@ -26,8 +26,6 @@ public class GetLogsEndpoint {
     @Autowired
     GetFromMail getFromMail;
     @Autowired
-    RoleService roleService;
-    @Autowired
     LogService logService;
     @Autowired
     GetLogs getLogs;

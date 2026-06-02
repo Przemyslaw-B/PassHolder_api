@@ -7,6 +7,7 @@ public class GetLogsDTO {
     public String typeName;
     //public String userMail;
     public String adminMail;
+    public String ip;
     public Date fromDate;
     public Date toDate;
 }
