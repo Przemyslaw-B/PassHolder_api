@@ -53,19 +53,11 @@ public class UserStorageEndpoint {
                 String user = jwtUtil.extractUsername(token);
                 long userId = getFromMail.getUserIdFromMail(user);
 
-                Optional<Integer> userRole = userRoleService.getRoleIdByUserId(userId);
-                if(userRole.isEmpty() || userRole.get() < 1){
-                    setNewLog.setLog(16, ip, userId);
-                    return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
-                }
-
                 //String json = loadUserStorage.loadUserStorage(user);
                 //System.out.println("Otrzymany json na wyjście api:" + json);
-                setNewLog.setLog(23,ip,userId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "storage", loadUserStorage.loadUserStorage(user)));
             }
         }
-        setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

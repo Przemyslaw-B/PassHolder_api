@@ -12,4 +12,5 @@ public interface PasswordRepository extends JpaRepository<PasswordEntity,Long> {
     Optional<PasswordEntity> findById(Long id);
     Optional<PasswordEntity> findByIdAndUserId(Long id, Long user_id);
     void deleteByIdAndUserId(Long id, Long user_id);
+    void deleteByUserId(Long user_id);
 }

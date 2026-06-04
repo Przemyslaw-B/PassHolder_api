@@ -2,6 +2,7 @@ package com.program.passholder.Database.Querry.Password;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +27,12 @@ public class PasswordService {
     public Optional<PasswordEntity> getEntityById(Long id){
         return passwordRepository.findById(id);
     }
+
+    @Transactional
+    public void setStoragePassword(long id, long userId, String newPassword){
+        passwordRepository.findByIdAndUserId(id, userId).ifPresent(password -> {
+            password.setPassword(newPassword);
+        });
+    }
+
 }

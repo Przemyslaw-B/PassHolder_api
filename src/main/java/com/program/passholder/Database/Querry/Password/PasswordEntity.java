@@ -23,12 +23,8 @@ public class PasswordEntity {
     @Column(name="password")
     @Convert(converter = EncryptionConverter.class)
     private String password;
-    @Column(name="exp_date")
-    private Date expDate;
     @Column(name="modify_date")
     private Date modifyDate;
-    //@Column(name="rotation")
-    //private int rotation;
 
     public Long getId() {return id;}
 
@@ -44,13 +40,8 @@ public class PasswordEntity {
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
 
-    public Date getExpDate() {return expDate;}
-    public void setExpDate(Date exp_date) {this.expDate = exp_date;}
-
     public Date getModifyDate() {return modifyDate;}
     public void setModifyDate(Date modify_date) {this.modifyDate = modify_date;}
 
-    //public int getRotation() {return rotation;}
-    //public void setRotation(int rotation) {this.rotation = rotation;}
 
 }

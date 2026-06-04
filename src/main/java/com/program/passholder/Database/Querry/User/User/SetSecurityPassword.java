@@ -11,11 +11,14 @@ public class SetSecurityPassword {
     private UserRepository userRepository;
 
     @Transactional
-    public void setUserSecurityPassword(long userId, String securityPassword) {
-            userRepository.findById(userId).ifPresent(user -> {
-            user.setSecurity_password(securityPassword);
-            userRepository.save(user);
-        });
+    public boolean setUserSecurityPassword(long userId, String securityPassword) {
+        return userRepository.findById(userId)
+                .map(user -> {
+                    user.setSecurity_password(securityPassword);
+                    userRepository.save(user);
+                    return true;
+                })
+                .orElse(false);
     }
 
 }

@@ -96,14 +96,21 @@ public class UserService {
                 .orElse(0);
     }
 
-    public void setSecurityPassword(long userId, String securityPassword){
-        setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
+    public boolean setSecurityPassword(long userId, String securityPassword){
+        return setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
     }
 
     @Transactional
     public void setAuthMethode(long userId, int methodeId){
         userRepository.findById(userId).ifPresent(user->{
             user.setNotificationMethod(methodeId);
+        });
+    }
+
+    @Transactional
+    public void removeUserSecurityPassword(long userId){
+        userRepository.findById(userId).ifPresent(user->{
+            user.setSecurity_password(null);
         });
     }
 
