@@ -47,7 +47,7 @@ public class GetLogs {
         if(data.get("userMail")!=null){
             userId =  userService.getUserIdByMail(data.get("userMail").toString());
         }
-        if(data.get("ip")!=null){
+        if(data.get("ip")!=null && !data.get("ip").equals("")){
             ip =  data.get("ip").toString();
         }
         if(data.get("fromDate") != null){

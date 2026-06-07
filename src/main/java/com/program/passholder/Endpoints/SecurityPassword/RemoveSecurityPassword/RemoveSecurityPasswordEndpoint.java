@@ -51,10 +51,10 @@ public class RemoveSecurityPasswordEndpoint {
                     if(auth){
                         userService.removeUserSecurityPassword(userId);
                         removeStorage.removeStorage(userId);
-                        return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", "true"));
+                        return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
                     }
                 }
-                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", "false"));
+                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false));
             }
         }
 

@@ -106,8 +106,12 @@ public class LogService {
     }
 
     public static Specification<LogEntity> hasIp(String ip) {
-        return (root, query, cb) ->
-                ip == null ? null : cb.like(root.get("ip"), "%" + ip + "%");
+        return (root, query, cb) -> {
+            if (ip == null || ip.isBlank()) {
+                return cb.conjunction();
+            }
+            return cb.like(root.get("ip"), "%" + ip + "%");
+        };
     }
 
     public static Specification<LogEntity> hasUser(Long userId){

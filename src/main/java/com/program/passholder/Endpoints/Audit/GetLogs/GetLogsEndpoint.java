@@ -61,11 +61,11 @@ public class GetLogsEndpoint {
                 setNewLog.setLog(16, ip, userId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
             }
-            //System.out.println("Użytkownik: " + userMail + ", rola: " + userRole.get() + ", ip: " + ip);
 
             Map<String, Object> data= new HashMap<>();
             data.put("typeName", request.typeName);
             data.put("adminMail", request.adminMail);
+            data.put("ip", request.ip);
             data.put("fromDate", request.fromDate);
             data.put("toDate", request.toDate);
 
@@ -75,19 +75,40 @@ public class GetLogsEndpoint {
             }
             logList = getLogs.getFilteredLogList(data);
             List<Map> finalList = new ArrayList<>();
+            int pageNumber = request.pageNumber;
+            int rowsAmount = request.rowsAmount;
+            if(logList.isEmpty() ||  logList.size() < rowsAmount){
+                pageNumber = 1;
+            }
+            int listSize = logList.size();
+            boolean lastPage=false;
+            int maxPageAmount = (int) Math.ceil((double) listSize / rowsAmount);
+            if(pageNumber >= maxPageAmount){
+                lastPage = true;
+                pageNumber=maxPageAmount;
+            }
+            if(logList.isEmpty()){
+                pageNumber = 1;
+            }
+            long counter = 0;
+            long counterStart=pageNumber*rowsAmount;
+            long counterEnd=counterStart+rowsAmount;
             for(LogEntity log : logList){
-                Map<String, Object> singleRecordList = new HashMap<>();
-                singleRecordList.put("recordId", log.getIdRecord());
-                singleRecordList.put("userName", userService.getMailById(log.getUserId()));
-                singleRecordList.put("settedBy", userService.getMailById(log.getSettedBy()));
-                singleRecordList.put("eventName", eventService.getNameById(log.getIdEvent()));
-                singleRecordList.put("ip", log.getIp());
-                singleRecordList.put("timestamp", log.getTimestamp());
-                singleRecordList.put("details", log.getDetails());
-                finalList.add(singleRecordList);
+                if(counter>=counterStart && counter<counterEnd){
+                    Map<String, Object> singleRecordList = new HashMap<>();
+                    singleRecordList.put("recordId", log.getIdRecord());
+                    singleRecordList.put("userName", userService.getMailById(log.getUserId()));
+                    singleRecordList.put("settedBy", userService.getMailById(log.getSettedBy()));
+                    singleRecordList.put("eventName", eventService.getNameById(log.getIdEvent()));
+                    singleRecordList.put("ip", log.getIp());
+                    singleRecordList.put("timestamp", log.getTimestamp());
+                    singleRecordList.put("details", log.getDetails());
+                    finalList.add(singleRecordList);
+                }
+                counter++;
             }
             setNewLog.setLog(1,ip,userId,userId);
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "logs", finalList));
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "logs", finalList, "pageNumber", pageNumber, "lastPage", lastPage));
         }
         setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));

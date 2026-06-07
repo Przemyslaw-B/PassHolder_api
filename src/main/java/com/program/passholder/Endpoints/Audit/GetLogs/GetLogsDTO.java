@@ -3,9 +3,8 @@ import java.sql.Date;
 
 public class GetLogsDTO {
     public int pageNumber;
-    public int pageSize;
+    public int rowsAmount;
     public String typeName;
-    //public String userMail;
     public String adminMail;
     public String ip;
     public Date fromDate;
