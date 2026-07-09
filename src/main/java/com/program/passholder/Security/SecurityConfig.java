@@ -32,6 +32,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/userValidation").permitAll()     //dostęp dla wszystkich tylko do procesu logowania
                         .requestMatchers("/api/CreateNewAccount").permitAll()  //dostęp dla wszystkich przy zakładaniu konta
                         .requestMatchers("/api/2FA").permitAll()
+                        .requestMatchers("/api/restorePassword").permitAll()
+                        .requestMatchers("/api/restorePassword/validateToken").permitAll()
+                        .requestMatchers("/api/restorePassword/saveNewPassword").permitAll()
                         .anyRequest().authenticated())               // Cała reszta wymaga tokenu
                 .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);    //W pierwszej kolejności sprawdzaj dodany jwtFilter (Token użytkownika)
         return http.build();
@@ -43,6 +46,11 @@ public class SecurityConfig {
         FilterRegistrationBean<LoginLimitFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(loginLimitFilter);
         registration.addUrlPatterns("/api/userValidation"); // Zarejestruj dla walidacji użytkownika (/* - dla wszystkich endpointów)
+        registration.addUrlPatterns("/api/CreateNewAccount");
+        registration.addUrlPatterns("/api/2FA");
+        registration.addUrlPatterns("/api/restorePassword");
+        registration.addUrlPatterns("/api/restorePassword/validateToken");
+        registration.addUrlPatterns("/api/restorePassword/saveNewPassword");
         registration.setOrder(1); // ustala kolejność działania filtrów
         return registration;
     }

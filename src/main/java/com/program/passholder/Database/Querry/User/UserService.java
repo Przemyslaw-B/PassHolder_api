@@ -78,6 +78,12 @@ public class UserService {
                 .orElse(null);
     }
 
+    public String getPasswordResetTokenByMail(String email){
+        return userRepository.findByEmail(email)
+                .map(UserEntity::getPasswordResetToken)
+                .orElse(null);
+    }
+
     public Long getUserIdByMail(String email){
         return userRepository.findByEmail(email)
                 .map(UserEntity::getId)
@@ -98,6 +104,13 @@ public class UserService {
 
     public boolean setSecurityPassword(long userId, String securityPassword){
         return setSecurityPassword.setUserSecurityPassword(userId, securityPassword);
+    }
+
+    @Transactional
+    public void setPasswordResetToken(String email, String token){
+        userRepository.findByEmail(email).ifPresent(user -> {
+            user.setPasswordResetToken(token);
+        });
     }
 
     @Transactional

@@ -46,6 +46,10 @@ public class UserEntity {
     private int notificationMethod;
     @Column(name="totp_secret")
     private String totpSecret;
+    @Column(name="password_reset_token")
+    @Convert(converter = EncryptionConverter.class)
+    private String passwordResetToken;
+
 
     public Long getId() {return id;}
     //public void setId(Long id) {this.id = id;}
@@ -91,4 +95,10 @@ public class UserEntity {
 
     public String getTotpSecret() {return totpSecret;}
     public void setTotpSecret(String totpSecret) {this.totpSecret = totpSecret;}
+
+    public String getPasswordResetToken() {return passwordResetToken;}
+
+    public void setPasswordResetToken(String passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
+    }
 }

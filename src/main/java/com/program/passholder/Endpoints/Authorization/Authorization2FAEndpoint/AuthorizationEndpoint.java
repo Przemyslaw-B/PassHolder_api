@@ -49,7 +49,6 @@ public class AuthorizationEndpoint {
             ip = httpRequest.getRemoteAddr();
         }
 
-
         String userEmail = requestBody.email;
         Optional<UserEntity> userEntity = userService.getEntityByMail(userEmail);
         long userId = getFromMail.getUserIdFromMail(userEmail);
