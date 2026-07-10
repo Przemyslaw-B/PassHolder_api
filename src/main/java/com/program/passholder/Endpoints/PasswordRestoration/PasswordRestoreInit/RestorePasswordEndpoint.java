@@ -36,6 +36,7 @@ public class RestorePasswordEndpoint {
             requestedEmail = request.email;
             restorePassword.proceedPasswordRestoringProcess(requestedEmail);
         }
+        //TODO zdarzenie żądania zmiany hasła
         return ResponseEntity.status(HttpStatus.OK).body(Map.of());
     }
 }
