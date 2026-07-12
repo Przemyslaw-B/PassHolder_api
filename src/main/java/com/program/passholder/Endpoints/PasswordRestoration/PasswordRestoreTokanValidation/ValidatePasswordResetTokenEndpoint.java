@@ -5,6 +5,7 @@ import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreInit.RestorePasswordDTO;
 import com.program.passholder.PasswordRestore.ProceedPasswordRestoringProcess;
+import com.program.passholder.PasswordRestore.ValidateResetPasswordToken;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,7 @@ import java.util.*;
 @RequestMapping("/api")
 public class ValidatePasswordResetTokenEndpoint {
     @Autowired
-    UserService userService;
-    @Autowired
-    ProceedPasswordRestoringProcess restorePassword;
+    ValidateResetPasswordToken validateResetPasswordToken;
 
     @PostMapping("/restorePassword/validateToken")
     public ResponseEntity<Map<String, Object>> validatePasswordResetTokenEndpoint(
@@ -35,10 +34,9 @@ public class ValidatePasswordResetTokenEndpoint {
         } else {
             ip = httpRequest.getRemoteAddr();
         }
-
+        //TODO zapis w logach
         if(!request.email.isEmpty() && !request.token.isEmpty()){
-            String savedPasswordToken = userService.getPasswordResetTokenByMail(request.token);
-            if(request.token.equals(savedPasswordToken)){
+            if(validateResetPasswordToken.validatePasswordResetToken(request.email, request.token)){
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
             }
         }

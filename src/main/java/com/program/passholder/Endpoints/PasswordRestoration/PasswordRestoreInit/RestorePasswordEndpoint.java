@@ -31,6 +31,8 @@ public class RestorePasswordEndpoint {
             ip = httpRequest.getRemoteAddr();
         }
 
+        //System.out.println("Request zmiany hasła użytkownika od ip: " + ip);
+
         String requestedEmail = "";
         if(!request.email.isEmpty()){
             requestedEmail = request.email;

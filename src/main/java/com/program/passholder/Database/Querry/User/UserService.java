@@ -107,9 +107,23 @@ public class UserService {
     }
 
     @Transactional
+    public void setNewAccountPassword(String email, String newPassword){
+        userRepository.findByEmail(email).ifPresent(user -> {
+            user.setPassword(newPassword);
+        });
+    }
+
+    @Transactional
     public void setPasswordResetToken(String email, String token){
         userRepository.findByEmail(email).ifPresent(user -> {
             user.setPasswordResetToken(token);
+        });
+    }
+
+    @Transactional
+    public void removePasswordResetToken(String email) {
+        userRepository.findByEmail(email).ifPresent(user -> {
+            user.setPasswordResetToken(null);
         });
     }
 
