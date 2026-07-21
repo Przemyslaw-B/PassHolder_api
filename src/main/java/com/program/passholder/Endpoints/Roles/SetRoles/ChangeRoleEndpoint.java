@@ -67,7 +67,7 @@ public class ChangeRoleEndpoint {
                     Optional <RoleEntity> newRole = roleService.getByName(newRoleName);
                     if(newRole.isPresent()) {
                         int newRoleId = newRole.get().getId();
-                        boolean result = userRoleService.changeUserRole(userModId, newRoleId);
+                        boolean result = userRoleService.changeUserRole(userModId, newRoleId, userId);
                         if(result) {
                             setNewLog.setLog(20, ip, userModId, userId);
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
+public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
     Optional<UserRoleEntity> findById(long id);
     List<UserRoleEntity> findByIdUser(long idUser);
     Optional<UserRoleEntity> findRecordByIdUser(long idUser);

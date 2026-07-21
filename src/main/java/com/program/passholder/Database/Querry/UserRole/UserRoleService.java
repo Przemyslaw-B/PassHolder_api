@@ -52,6 +52,20 @@ public class UserRoleService {
     }
 
     @Transactional
+    public boolean changeUserRole(long userId, int newRoleId, long settedBy) {
+        if (userId <= 0 || newRoleId <= 0) {
+            return false;
+        }
+        return userRoleRepository.findRecordByIdUser(userId)
+                .map(userRole -> {
+                    userRole.setIdRole(newRoleId);
+                    userRole.setSettedBy(settedBy);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    @Transactional
     public boolean changeUserRoleToDefaultUser(long idUser) {
         if (idUser <= 0) {
             return false;

@@ -40,10 +40,10 @@ public class GetUserAuthenticationMethode {
             String token = authHeader.substring(7);
             String userMail = jwtUtil.extractUsername(token);
             long userId = getFromMail.getUserIdFromMail(userMail);
-            System.out.println("odczytany userID: " + userId);
+            //System.out.println("odczytany userID: " + userId);
             Optional<UserEntity> userEntity = userService.getEntityByid(userId);
             if(userEntity.isPresent()){
-                System.out.println("Odnaleziono userEntity");
+                //System.out.println("Odnaleziono userEntity");
                 int userAuthMethode = userEntity.get().getNotificationMethod();
                 Optional<AuthenticationMethodesEntity> methodeEntity = authenticationMethodesService.getMethodeById(userAuthMethode);
                 if(methodeEntity.isPresent()){

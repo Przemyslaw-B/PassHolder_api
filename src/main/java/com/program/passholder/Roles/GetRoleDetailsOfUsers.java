@@ -23,9 +23,16 @@ public class GetRoleDetailsOfUsers {
                 //long id = entity.getIdRole();
                 long userId = entity.getIdUser();
                 int roleId = entity.getIdRole();
-                long settedBy = entity.getSettedBy();
+                long settedBy = 0;
+                if(entity.getSettedBy() != null){
+                    settedBy = entity.getSettedBy();
+                }
                 String userMail = userService.getMailById(userId);
-                String adminMail = userService.getMailById(userId);
+
+                String adminMail = "system";
+                if(settedBy != 0){
+                    adminMail = userService.getMailById(settedBy);
+                }
                 String roleName="";
                 if(roleService.getById(roleId).isPresent()){
                     roleName = roleService.getById(roleId).get().getName();
