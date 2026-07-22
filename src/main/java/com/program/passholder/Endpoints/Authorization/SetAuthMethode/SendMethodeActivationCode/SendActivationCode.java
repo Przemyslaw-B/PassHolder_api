@@ -62,7 +62,7 @@ public class SendActivationCode {
             }
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK","success", false, "error", "nie odczytano danych"));
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed"));
     }
 }

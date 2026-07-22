@@ -3,6 +3,7 @@ package com.program.passholder.Database.Querry.UserRole;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,4 +82,17 @@ public class UserRoleService {
     public List<UserRoleEntity> findAll() {
         return userRoleRepository.findAll();
     }
+
+    public List<UserRoleEntity> findAllAdmins() {
+        int userId = 1;
+        List<UserRoleEntity> list = new ArrayList<UserRoleEntity>();
+        List<UserRoleEntity> fullList = userRoleRepository.findAll();
+        for(UserRoleEntity picked : fullList) {
+            if(picked.getIdRole()!=userId) {
+                list.add(picked);
+            }
+        }
+        return list;
+    }
+
 }

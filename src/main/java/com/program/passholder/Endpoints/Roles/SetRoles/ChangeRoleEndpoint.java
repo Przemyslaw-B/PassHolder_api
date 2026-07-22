@@ -59,7 +59,7 @@ public class ChangeRoleEndpoint {
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 Optional<Integer> userModRole =getRoleFromUserMail.getRoleId(userModMail);
                 if(userRole.isEmpty() || userModRole.isEmpty() || userRole.get() <= userModRole.get()){
-                    setNewLog.setLog(16, ip, userId);
+                    //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
                 String newRoleName = requestBody.newRoleName;
@@ -69,7 +69,21 @@ public class ChangeRoleEndpoint {
                         int newRoleId = newRole.get().getId();
                         boolean result = userRoleService.changeUserRole(userModId, newRoleId, userId);
                         if(result) {
-                            setNewLog.setLog(20, ip, userModId, userId);
+                            //setNewLog.setLog(20, ip, userModId, userId);
+                            switch (newRoleId){
+                                case 1:
+                                    setNewLog.setLog(8, ip, userModId, userId); //loguj zmianę roli na user
+                                    break;
+                                case 2:
+                                    setNewLog.setLog(9, ip, userModId, userId); //loguj zmianę roli na system_admin
+                                    break;
+                                case 3:
+                                    setNewLog.setLog(10, ip, userModId, userId);    //loguj zmianę roli na head_admin
+                                    break;
+                                case 4:
+                                    setNewLog.setLog(24, ip, userModId, userId);    //loguj zmianę roli na master
+                                    break;
+                            }
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
                         } else{
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "edycja nie powiodła się"));
@@ -81,10 +95,10 @@ public class ChangeRoleEndpoint {
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "brak podanej roli"));
                 }
             }
-            setNewLog.setLog(12, ip);
+            //setNewLog.setLog(12, ip);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "zły token"));
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

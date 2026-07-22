@@ -1,6 +1,7 @@
 package com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreTokanValidation;
 
 import com.program.passholder.Database.Querry.AuditLogs.Logs.LogEntity;
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreInit.RestorePasswordDTO;
@@ -22,6 +23,10 @@ import java.util.*;
 public class ValidatePasswordResetTokenEndpoint {
     @Autowired
     ValidateResetPasswordToken validateResetPasswordToken;
+    @Autowired
+    SetNewLog setNewLog;
+    @Autowired
+    UserService userService;
 
     @PostMapping("/restorePassword/validateToken")
     public ResponseEntity<Map<String, Object>> validatePasswordResetTokenEndpoint(
@@ -34,10 +39,23 @@ public class ValidatePasswordResetTokenEndpoint {
         } else {
             ip = httpRequest.getRemoteAddr();
         }
-        //TODO zapis w logach
+
         if(!request.email.isEmpty() && !request.token.isEmpty()){
             if(validateResetPasswordToken.validatePasswordResetToken(request.email, request.token)){
+                //Wyciągnięcie usera jeśli istnieje użytkownik z takim email
+                Optional<UserEntity> userEntity = userService.getEntityByMail(request.email);
+                if(userEntity.isPresent()){
+                    long userId = userEntity.get().getId();
+                    setNewLog.setLog(23,ip, userId);    //poprawny token LOG
+                }
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
+            } else{
+                //Wyciągnięcie usera jeśli istnieje użytkownik z takim email
+                Optional<UserEntity> userEntity = userService.getEntityByMail(request.email);
+                if(userEntity.isPresent()){
+                    long userId = userEntity.get().getId();
+                    setNewLog.setLog(22,ip, userId);    //niepoprawny token LOG
+                }
             }
         }
 

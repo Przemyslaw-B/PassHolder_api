@@ -61,14 +61,14 @@ public class GetUserPhoneEndpoint {
                 if(entity.isPresent()){
                     String phone = entity.get().getPhone();
                     map.put("phone", phone);
-                    setNewLog.setLog(24, ip, userId);
+                    setNewLog.setLog(27, ip, userId);   //loguj wysłanie kodu aktywacyjnego sms
                     return ResponseEntity.ok(Map.of("status", "ok", "data", map));
                 } else{
                     return ResponseEntity.ok(Map.of("status", "ok", "error", "user not found"));
                 }
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.ok(Map.of("status", "Invalid", "publicKey", ""));
     }
 }

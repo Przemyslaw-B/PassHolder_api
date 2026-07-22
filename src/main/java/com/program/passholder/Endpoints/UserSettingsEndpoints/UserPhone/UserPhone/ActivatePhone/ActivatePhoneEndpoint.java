@@ -2,8 +2,10 @@ package com.program.passholder.Endpoints.UserSettingsEndpoints.UserPhone.UserPho
 
 import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Session.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,21 @@ public class ActivatePhoneEndpoint {
     UserService userService;
     @Autowired
     ValidateAuthKey validateAuthKey;
+    @Autowired
+    SetNewLog setNewLog;
 
     @PostMapping("/activatePhone")
     public ResponseEntity<Map<String, Object>> activate(
             @RequestHeader("Authorization") String authHeader,
-            @RequestBody ActivatePhoneDTO request){
+            @RequestBody ActivatePhoneDTO request,
+            HttpServletRequest httpRequest){
+
+        String ip = httpRequest.getHeader("X-Forwarded-For");
+        if (ip != null && !ip.isEmpty()) {
+            ip = ip.split(",")[0];
+        } else {
+            ip = httpRequest.getRemoteAddr();
+        }
 
         //System.out.println("numer: " + request.phone + ", code: " +  request.activationKey);
         if(authHeader!=null && authHeader.startsWith("Bearer ")){
@@ -35,6 +47,8 @@ public class ActivatePhoneEndpoint {
                     Boolean isValidated = validateAuthKey.validatePhone(request.phone, request.activationKey);
                     if (isValidated) {
                         userService.setUserPhone(email, request.phone);
+                        long userId = userService.getUserIdByMail(email);
+                        setNewLog.setLog(18, ip, userId);   //Loguj dodanie numeru telefonu
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
                     }
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false));

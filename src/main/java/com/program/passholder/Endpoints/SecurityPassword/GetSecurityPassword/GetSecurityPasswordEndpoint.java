@@ -53,20 +53,20 @@ public class GetSecurityPasswordEndpoint {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 if(userRole.isEmpty() || userRole.get() < 1){
-                    setNewLog.setLog(16, ip, userId);
+                    //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
 
                 String password = userService.getSecurityPasswordById(userId);
                 Map<String, String> map = new HashMap<>();
                 map.put("securityPassword", password);
-                setNewLog.setLog(21, ip, userId);
+                //setNewLog.setLog(21, ip, userId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "map", map));
             }
-            setNewLog.setLog(12, ip);
+            //setNewLog.setLog(12, ip);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "token invalid"));
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

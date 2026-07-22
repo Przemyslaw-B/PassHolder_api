@@ -107,10 +107,10 @@ public class GetLogsEndpoint {
                 }
                 counter++;
             }
-            setNewLog.setLog(1,ip,userId,userId);
+            //setNewLog.setLog(1,ip,userId,userId);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "logs", finalList, "pageNumber", pageNumber, "lastPage", lastPage));
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

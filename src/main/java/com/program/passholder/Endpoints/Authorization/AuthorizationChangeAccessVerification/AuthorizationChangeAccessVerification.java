@@ -51,10 +51,10 @@ public class AuthorizationChangeAccessVerification {
                 long userId = userEntity.get().getId();
                 String pass= request.password;
                 if(validationUser.validateUser(userMail, pass)){
-                    setNewLog.setLog(27,ip,userId,userId);
+                    //setNewLog.setLog(27,ip,userId,userId);
                     return ResponseEntity.ok(Map.of("status", "Validated", "success", true));
                 }
-                setNewLog.setLog(28,ip,userId,userId);
+                //setNewLog.setLog(28,ip,userId,userId);
                 return ResponseEntity.ok(Map.of("status", "ok", "success", false));
             }
         }

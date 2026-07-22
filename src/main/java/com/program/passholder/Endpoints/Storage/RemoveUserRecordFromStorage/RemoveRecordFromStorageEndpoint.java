@@ -52,18 +52,18 @@ public class RemoveRecordFromStorageEndpoint {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 if(userRole.isEmpty() || userRole.get() < 1){
-                    setNewLog.setLog(16, ip, userId);
+                    //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
 
                 long recordId=requestBody.recordId;
                 //System.out.println("Otrzymano request usunięcia rekordu: " + recordId);
                 removeRecordFromStorage.removeRecordFromStorage(userId, recordId);
-                setNewLog.setLog(8, ip, userId, userId, recordId);
+                setNewLog.setLog(25, ip, userId, userId, recordId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Success"));
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

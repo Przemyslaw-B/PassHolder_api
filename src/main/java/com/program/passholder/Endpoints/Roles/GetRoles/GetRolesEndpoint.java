@@ -62,7 +62,8 @@ public class GetRolesEndpoint {
             }
 
             List<UserRoleEntity> roleList = new ArrayList<UserRoleEntity>();
-            roleList = userRoleService.findAll();
+            //roleList = userRoleService.findAll();
+            roleList = userRoleService.findAllAdmins();
             //System.out.println("Role: "+ roleList.size());
             List<Object> list = getRoleDetailsOfUsers.getDetails(roleList);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "roles", list));

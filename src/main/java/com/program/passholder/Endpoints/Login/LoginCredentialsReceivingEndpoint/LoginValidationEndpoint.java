@@ -72,11 +72,12 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
                 boolean authorized = isAuthorized.isAuthorized(email);
                 //String auth = Boolean.toString(authorized);
                 proceedAuth.proceed(email); //wyślij wiadomość do usera
+                setNewLog.setLog(3,ip, userId); //logowanie użytkownika
                 return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode));
             }
             return ResponseEntity.ok(Map.of("status", "Invalid"));
         }
-        setNewLog.setLog(4,ip, userId);
+        //setNewLog.setLog(4,ip, userId);
         return ResponseEntity.ok(Map.of("status", "Invalid"));
     }
 

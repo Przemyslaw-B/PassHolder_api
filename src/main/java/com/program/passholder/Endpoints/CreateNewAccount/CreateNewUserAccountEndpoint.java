@@ -46,13 +46,13 @@ public class CreateNewUserAccountEndpoint {
             return ResponseEntity.ok(Map.of("status", "emptyForm"));
         }
         if(isExist){
-            setNewLog.setLog(18, ip);
+            //setNewLog.setLog(18, ip);
             return ResponseEntity.ok(Map.of("status", "alreadyExist"));
         }
         createNewUser.createNewUser(email, name, password);
         long userId = userService.getUserIdByMail(email);
 
-        setNewLog.setLog(2, ip, userId);
+        setNewLog.setLog(5, ip, userId);
         return ResponseEntity.ok(Map.of("status", "accountCreated"));
     }
 

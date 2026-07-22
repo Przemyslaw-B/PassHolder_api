@@ -1,6 +1,7 @@
 package com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreSaveNewPassword;
 
 import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Encryption.Encoder;
@@ -27,6 +28,8 @@ public class PasswordRestoreSaveNewPasswordEndpoint {
     UserService userService;
     @Autowired
     ValidateAuthKey validateAuthKey;
+    @Autowired
+    SetNewLog setNewLog;
 
 
     @PostMapping("/restorePassword/saveNewPassword")
@@ -51,17 +54,21 @@ public class PasswordRestoreSaveNewPasswordEndpoint {
                     if(validateAuthKey.validate(request.email, request.authCode) && userResetPasswordToken.equals(request.passwordChangeToken)){
                         String hashedNewPassword = hash.passwordEncoder().encode(request.newPassword);
                         userService.setNewAccountPassword(request.email, hashedNewPassword);
-                        //TODO zapis w logach
                         System.out.println("Hasło zmienione pomyślnie!");
+                        //Wyciągnięcie usera jeśli istnieje użytkownik z takim email
+                        if(userEntity.isPresent()){
+                            long userId = userEntity.get().getId();
+                            setNewLog.setLog(7,ip, userId); //log pomyślnie zmienionego hasła
+                        }
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true, "message", "Hasło zmienione pomyślnie"));
                     } else{
-                        System.out.println("authCode lub ResetPasswordToken jest nieprawidłowe!");
-                        System.out.println("otrzymany authCode: " + request.authCode);
-                        System.out.println("authCode z bazy: " + userAuthCode);
-                        System.out.println("authCode takie samo?: " + userAuthCode.equals(request.authCode));
-                        System.out.println("otrzymany reset Token: " + request.passwordChangeToken);
-                        System.out.println("reset password Token z Bazy: " + userResetPasswordToken);
-                        System.out.println("PasswordResetToken taki sam?: " + userResetPasswordToken.equals(request.passwordChangeToken));
+                        //System.out.println("authCode lub ResetPasswordToken jest nieprawidłowe!");
+                        //System.out.println("otrzymany authCode: " + request.authCode);
+                        //System.out.println("authCode z bazy: " + userAuthCode);
+                        //System.out.println("authCode takie samo?: " + userAuthCode.equals(request.authCode));
+                        //System.out.println("otrzymany reset Token: " + request.passwordChangeToken);
+                        //System.out.println("reset password Token z Bazy: " + userResetPasswordToken);
+                        //System.out.println("PasswordResetToken taki sam?: " + userResetPasswordToken.equals(request.passwordChangeToken));
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false, "message", "Błędny kod autoryzacji."));
                     }
                 } else{
@@ -71,12 +78,11 @@ public class PasswordRestoreSaveNewPasswordEndpoint {
                 System.out.println("Email nieprawidłowy, NIE wykryto UserEntity!");
             }
         }
-        //TODO zapis w logach
-        System.out.println("Nie udało się zmienić hasła..");
-        System.out.println("Otrzymany email: " + request.email);
-        System.out.println("Otrzymany reset token: " + request.passwordChangeToken);
-        System.out.println("Otrzymany auth code: " + request.authCode);
-        System.out.println("Otrzymane nowe hasło: " + request.newPassword);
+        //System.out.println("Nie udało się zmienić hasła..");
+        //System.out.println("Otrzymany email: " + request.email);
+        //System.out.println("Otrzymany reset token: " + request.passwordChangeToken);
+        //System.out.println("Otrzymany auth code: " + request.authCode);
+        //System.out.println("Otrzymane nowe hasło: " + request.newPassword);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false, "message", "Błąd zmiany hasła."));
     }
 }

@@ -52,7 +52,7 @@ public class RemoveRoleEndpoint {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 if(userRole.isEmpty() || userRole.get() < 2){
-                    setNewLog.setLog(16, ip, userId);
+                    //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
 
@@ -61,7 +61,7 @@ public class RemoveRoleEndpoint {
                 if(userRoleId.isPresent() && userModRoleId.isPresent()) {
                     boolean result = userRoleService.changeUserRoleToDefaultUser(userModRoleId.get());
                     if(result) {
-                        setNewLog.setLog(19,ip, userModId, userId);
+                        setNewLog.setLog(8,ip, userModId, userId);  //loguj zmianę roli na usera
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
                     } else{
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "edycja nie powiodła się"));
@@ -70,10 +70,10 @@ public class RemoveRoleEndpoint {
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "nie znaleziono użytkownika"));
                 }
             }
-            setNewLog.setLog(12,ip);
+            //setNewLog.setLog(12,ip);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "zły token"));
         }
-        setNewLog.setLog(12,ip);
+        //setNewLog.setLog(12,ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

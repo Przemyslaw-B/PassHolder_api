@@ -61,12 +61,12 @@ public class TOTPService {
             verifier.setAllowedTimePeriodDiscrepancy(1);
             long time = timeProvider.getTime();
             String generatedCode = codeGenerator.generate(secret, time);
-            System.out.println("SECRET: " + secret);
-            System.out.println("USER CODE: " + code);
-            System.out.println("GENERATED CODE: " + generatedCode);
-            System.out.println("TIME: " + time);
-            System.out.println("Secret: " + secret + ", code: " + code);
-            System.out.println("Verification: " + verifier.isValidCode(secret, code));
+            //System.out.println("SECRET: " + secret);
+            //System.out.println("USER CODE: " + code);
+            //System.out.println("GENERATED CODE: " + generatedCode);
+            //System.out.println("TIME: " + time);
+            //System.out.println("Secret: " + secret + ", code: " + code);
+            //System.out.println("Verification: " + verifier.isValidCode(secret, code));
             return verifier.isValidCode(secret, code);
         } catch (Exception e) {
             e.printStackTrace();

@@ -51,13 +51,13 @@ public class RemoveSecurityPasswordEndpoint {
                     if(auth){
                         userService.removeUserSecurityPassword(userId);
                         removeStorage.removeStorage(userId);
+                        setNewLog.setLog(13, ip, userId);   //logowanie usunięcia hasła bezpieczeństwa
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
                     }
                 }
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false));
             }
         }
-
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

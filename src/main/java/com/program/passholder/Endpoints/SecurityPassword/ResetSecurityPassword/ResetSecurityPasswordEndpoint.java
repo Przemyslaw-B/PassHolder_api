@@ -63,6 +63,7 @@ public class ResetSecurityPasswordEndpoint {
                                 String newPass = passwordEntity.getPassword();
                                 passwordService.setStoragePassword(passwordId, userId, newPass);
                             }
+                            setNewLog.setLog(12, ip, userId);   //logowanie zmiany hasła bezpieczeństwa
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", "true"));
                         }
                     }

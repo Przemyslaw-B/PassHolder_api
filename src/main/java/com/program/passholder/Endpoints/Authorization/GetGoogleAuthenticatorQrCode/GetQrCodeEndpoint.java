@@ -53,15 +53,13 @@ public class GetQrCodeEndpoint {
                 String qrCode = "";
                 if(userEntity.get().getTotpSecret()==null) {
                     totpService.setSecret(userMail);
-                    setNewLog.setLog(26,ip, userId, userId);
-
                 } else {
                     qrCode = totpService.getQrCode(userMail);
                 }
+                setNewLog.setLog(4,ip, userId); //Log wygenerowania kodu QR
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "qrCode", qrCode));
             }
         }
-        setNewLog.setLog(12,ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

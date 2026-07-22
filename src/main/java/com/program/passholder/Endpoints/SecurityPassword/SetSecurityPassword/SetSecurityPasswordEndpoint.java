@@ -63,7 +63,7 @@ public class SetSecurityPasswordEndpoint {
                 if(newSecurityPassword != null && !newSecurityPassword.equals("")) {
                     //System.out.println("Ustawiam nowe hasło..");
                     userService.setSecurityPassword(userId, newSecurityPassword);
-                    setNewLog.setLog(22,ip,userId,userId);
+                    setNewLog.setLog(11,ip,userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
 
                 } else{
@@ -71,11 +71,11 @@ public class SetSecurityPasswordEndpoint {
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "new security password is required"));
                 }
             } else{
-                setNewLog.setLog(12, ip);
+                //setNewLog.setLog(12, ip);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Invalid token"));
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

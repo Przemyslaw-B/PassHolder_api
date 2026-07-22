@@ -1,5 +1,8 @@
 package com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreInit;
 
+import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
+import com.program.passholder.Database.Querry.User.UserEntity;
+import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.PasswordRestore.ProceedPasswordRestoringProcess;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +22,10 @@ public class RestorePasswordEndpoint {
 
     @Autowired
     ProceedPasswordRestoringProcess restorePassword;
+    @Autowired
+    SetNewLog setNewLog;
+    @Autowired
+    UserService userService;
 
     @PostMapping("/restorePassword")
     public ResponseEntity<Map<String, Object>> restorePasswordEndpoint(
@@ -38,7 +46,12 @@ public class RestorePasswordEndpoint {
             requestedEmail = request.email;
             restorePassword.proceedPasswordRestoringProcess(requestedEmail);
         }
-        //TODO zdarzenie żądania zmiany hasła
+        //Wyciągnięcie usera jeśli istnieje użytkownik z takim email
+        Optional<UserEntity> userEntity = userService.getEntityByMail(requestedEmail);
+        if(userEntity.isPresent()){
+            long userId = userEntity.get().getId();
+            setNewLog.setLog(6,ip, userId);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(Map.of());
     }
 }

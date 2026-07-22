@@ -63,13 +63,13 @@ public class UserCredentialUpdate {
                 Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword);// , newRotation);
                 if(result){
                     if(!newLogin.isEmpty()){
-                        setNewLog.setLog(9,ip,userId,userId, recordId);
+                        setNewLog.setLog(16,ip,userId,userId, recordId);
                     }
                     if(!newUrl.isEmpty()){
-                        setNewLog.setLog(10,ip,userId,userId, recordId);
+                        setNewLog.setLog(15,ip,userId,userId, recordId);
                     }
                     if(!newPassword.isEmpty()){
-                        setNewLog.setLog(11,ip,userId,userId, recordId);
+                        setNewLog.setLog(17,ip,userId,userId, recordId);
                     }
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "changes", "success"));
                 } else{
@@ -78,7 +78,7 @@ public class UserCredentialUpdate {
                 }
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 

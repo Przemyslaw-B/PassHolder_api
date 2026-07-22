@@ -44,12 +44,11 @@ public class LoadUserStorage {
     private Long getUserId(String email){
         Long id=userService.getUserIdByMail(email);
             if(id==null){
-                System.out.println("Dla użytkownika " + email + " nie odnaleziono wyników. return="+id);
+                //System.out.println("Dla użytkownika " + email + " nie odnaleziono wyników. return="+id);
                 return null;
             }
         return id;
     }
-
     private void clearMaps(){
         recordsList.clear();
     }

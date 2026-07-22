@@ -59,19 +59,19 @@ public class ActivateNewMethode {
                         int methodeId = methode.getId();
                         Boolean isValidated = validateAuthKey.validateMethode(userMail,methodeId, request.code);
 
-                        System.out.println("newMethode: " + request.methode);
-                        System.out.println("userCode: " + request.code);
-                        System.out.println("Code in DB: " + entity.get().getAuthKey());
-                        System.out.println("isValidated: " + isValidated);
-                        System.out.println("MethodeId: " + methodeId);
+                        //System.out.println("newMethode: " + request.methode);
+                        //System.out.println("userCode: " + request.code);
+                        //System.out.println("Code in DB: " + entity.get().getAuthKey());
+                        //System.out.println("isValidated: " + isValidated);
+                        //System.out.println("MethodeId: " + methodeId);
                         if(isValidated) {
                             userService.setAuthMethode(userId, methodeId);
                             if(methodeId == 1){
-                                setNewLog.setLog(33, ip, userId, userId);
+                                setNewLog.setLog(19, ip, userId);   //LOG zmiany metody autoryzacji na email
                             } else if(methodeId == 2){
-                                setNewLog.setLog(34, ip, userId, userId);
+                                setNewLog.setLog(20, ip, userId);   //LOG zmiany metody autoryzacji na sms
                             } else if(methodeId == 3){
-                                setNewLog.setLog(35, ip, userId, userId);
+                                setNewLog.setLog(21, ip, userId);   //LOG zmiany metody autoryzacji na TOTP
                             }
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK","success", true));
                         }

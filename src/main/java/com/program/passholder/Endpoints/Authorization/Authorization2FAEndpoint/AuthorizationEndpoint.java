@@ -78,10 +78,10 @@ public class AuthorizationEndpoint {
             data.put("securityPassword", securityPassword);
             data.put("status", "Validated");
 
-            setNewLog.setLog(3, ip, userId);
+            setNewLog.setLog(1, ip, userId);    //Poprawna autoryzacja
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success", "role", userRole, "data", data));
         } else {
-            setNewLog.setLog(4, ip, userId);
+            setNewLog.setLog(2, ip, userId);    //Błędna autoryzacja
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed"));
         }
     }

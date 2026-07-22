@@ -52,16 +52,16 @@ public class UploadNewStorageRecord {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 if(userRole.isEmpty() || userRole.get() < 1){
-                    setNewLog.setLog(16, ip, userId);
+                    //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
 
                 long idCloud= createNewRecordForUser.setNewPasswordRecordForUser(userId, requestBody.url, requestBody.access_login, requestBody.access_pwd, requestBody.modification_date);
-                setNewLog.setLog(7, ip, userId, userId, idCloud);
+                setNewLog.setLog(14, ip, userId, userId, idCloud);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "id_cloud", idCloud));
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

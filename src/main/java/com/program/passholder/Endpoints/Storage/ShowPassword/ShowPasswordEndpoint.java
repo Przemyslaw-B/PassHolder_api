@@ -50,12 +50,12 @@ public class ShowPasswordEndpoint {
                 long userId = getFromMail.getUserIdFromMail(userEmail);
                 Optional<UserEntity> userEntity = userService.getEntityByid(userId);
                 if(userEntity.isPresent()){
-                    setNewLog.setLog(25, ip, userId, userId, requestBody.recordId);
+                    setNewLog.setLog(26, ip, userId, userId, requestBody.recordId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "success"));
                 }
             }
         }
-        setNewLog.setLog(12, ip);
+        //setNewLog.setLog(12, ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }

@@ -48,7 +48,7 @@ public class GetUsermailFilterData {
 
             Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
             if(userRole.isEmpty() || userRole.get() < 2){
-                setNewLog.setLog(16, ip, userId);
+                //setNewLog.setLog(16, ip, userId);
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
             }
 
@@ -65,7 +65,7 @@ public class GetUsermailFilterData {
             }
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "to short"));
         }
-        setNewLog.setLog(12,ip);
+        //setNewLog.setLog(12,ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 }
