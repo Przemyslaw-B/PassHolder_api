@@ -35,9 +35,10 @@ public class LoginLimitFilter extends OncePerRequestFilter {
         }
     }
     private Bucket newBucket(String ip) {
-        Refill refill = Refill.intervally(10, Duration.ofMinutes(1));   // odnawiaj 10 tokenów co 1 minutę
-        Bandwidth limit = Bandwidth.classic(10, refill); // Limit 10 tokenów
-        return Bucket4j.builder()
+        //Refill refill = Refill.intervally(10, Duration.ofMinutes(1));   // odnawiaj 10 tokenów co 1 minutę
+        Refill refill = Refill.greedy(1, Duration.ofSeconds(1));   // odnawiaj 1 token co 3 sekund
+        Bandwidth limit = Bandwidth.classic(50, refill); // Limit 10 tokenów
+        return Bucket.builder()
                 .addLimit(limit)
                 .build();
     }

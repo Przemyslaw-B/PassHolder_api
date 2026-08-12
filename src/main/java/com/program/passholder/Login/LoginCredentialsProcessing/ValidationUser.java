@@ -14,13 +14,9 @@ public class ValidationUser {
     private PasswordEncoder passwordEncoder;
     @Autowired
     UserService userService;
-    @Autowired
-    Decoder decoder;
 
     public boolean validateUser(String email, String password) {
         String passwordDB = userService.getPasswordByEmail(email);
-        //String privateKey = userService.getPrivateKeyByEmail(email);
-        //String decodedPassword = decoder.decrypt(password, privateKey);
         return passwordEncoder.matches(password, passwordDB);
     }
 }

@@ -45,12 +45,15 @@ public class SecurityConfig {
     public FilterRegistrationBean<LoginLimitFilter> rateLimitFilterRegistration(LoginLimitFilter loginLimitFilter) {
         FilterRegistrationBean<LoginLimitFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(loginLimitFilter);
-        registration.addUrlPatterns("/api/userValidation"); // Zarejestruj dla walidacji użytkownika (/* - dla wszystkich endpointów)
+        registration.addUrlPatterns("/api/*"); // Zarejestruj dla walidacji użytkownika (/* - dla wszystkich endpointów)
+        /*
+        registration.addUrlPatterns("/api/userValidation");
         registration.addUrlPatterns("/api/CreateNewAccount");
         registration.addUrlPatterns("/api/2FA");
         registration.addUrlPatterns("/api/restorePassword");
         registration.addUrlPatterns("/api/restorePassword/validateToken");
         registration.addUrlPatterns("/api/restorePassword/saveNewPassword");
+        */
         registration.setOrder(1); // ustala kolejność działania filtrów
         return registration;
     }
