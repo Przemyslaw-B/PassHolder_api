@@ -67,11 +67,11 @@ public class ActivateNewMethode {
                         if(isValidated) {
                             userService.setAuthMethode(userId, methodeId);
                             if(methodeId == 1){
-                                setNewLog.setLog(19, ip, userId);   //LOG zmiany metody autoryzacji na email
+                                setNewLog.setLog(19, ip, userId, userId);   //LOG zmiany metody autoryzacji na email
                             } else if(methodeId == 2){
-                                setNewLog.setLog(20, ip, userId);   //LOG zmiany metody autoryzacji na sms
+                                setNewLog.setLog(20, ip, userId, userId);   //LOG zmiany metody autoryzacji na sms
                             } else if(methodeId == 3){
-                                setNewLog.setLog(21, ip, userId);   //LOG zmiany metody autoryzacji na TOTP
+                                setNewLog.setLog(21, ip, userId, userId);   //LOG zmiany metody autoryzacji na TOTP
                             }
                             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK","success", true));
                         }

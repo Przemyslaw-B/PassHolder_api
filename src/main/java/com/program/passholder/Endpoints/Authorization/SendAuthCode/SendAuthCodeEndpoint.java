@@ -1,5 +1,6 @@
-package com.program.passholder.Endpoints.Authorization.GetGoogleAuthenticatorQrCode;
+package com.program.passholder.Endpoints.Authorization.SendAuthCode;
 
+import com.program.passholder.Authorization.ProceedAuth;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserEntity;
@@ -20,20 +21,18 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class GetQrCodeEndpoint {
+public class SendAuthCodeEndpoint {
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
     GetFromMail getFromMail;
     @Autowired
-    SetNewLog setNewLog;
-    @Autowired
-    TOTPService totpService;
-    @Autowired
     UserService userService;
+    @Autowired
+    ProceedAuth proceedAuth;
 
-    @GetMapping("/getQrCode")
-    public ResponseEntity<Map<String, Object>> getQrCodeEndpoin(
+    @GetMapping("/getAuthCode")
+    public ResponseEntity<Map<String, Object>> getAuthCode(
             @RequestHeader("Authorization") String authHeader,
             HttpServletRequest httpRequest){
 
@@ -43,21 +42,19 @@ public class GetQrCodeEndpoint {
         } else {
             ip = httpRequest.getRemoteAddr();
         }
-
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
             String userMail = jwtUtil.extractUsername(token);
             Optional<UserEntity> userEntity = userService.getEntityByMail(userMail);
             if(userEntity.isPresent()) {
                 long userId = getFromMail.getUserIdFromMail(userMail);
-                String qrCode = "";
-                if(userEntity.get().getTotpSecret()==null) {
-                    totpService.setSecret(userMail);
-                } else {
-                    qrCode = totpService.getQrCode(userMail);
+                int userAuthMethode = userEntity.get().getNotificationMethod();
+                if(userAuthMethode == 1){
+                    proceedAuth.sendKeyToPickedMethode(userMail, 1);
+                } else if(userAuthMethode == 2){
+                    proceedAuth.sendKeyToPickedMethode(userMail, 2);
                 }
-                setNewLog.setLog(4,ip, userId, userId); //Log wygenerowania kodu QR
-                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "qrCode", qrCode));
+                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));

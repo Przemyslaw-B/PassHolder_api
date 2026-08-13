@@ -3,6 +3,8 @@ package com.program.passholder.Database.Querry.User;
 import com.program.passholder.Security.EncryptionConverter;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
 @Access(AccessType.FIELD)
@@ -49,6 +51,10 @@ public class UserEntity {
     @Column(name="password_reset_token")
     @Convert(converter = EncryptionConverter.class)
     private String passwordResetToken;
+    @Column(name="locked_until")
+    private Date lockedUntil;
+    @Column(name="failed_attempts")
+    private Integer failedAttempts;
 
 
     public Long getId() {return id;}
@@ -101,4 +107,12 @@ public class UserEntity {
     public void setPasswordResetToken(String passwordResetToken) {
         this.passwordResetToken = passwordResetToken;
     }
+
+    public Date getLockedUntil() {return lockedUntil;}
+    public void setLockedUntil(Date lockTermin){
+        this.lockedUntil = lockTermin;
+    };
+
+    public Integer getFailedAttempts() {return failedAttempts;}
+    public void setFailedAttempts(Integer failedAttempts) {this.failedAttempts = failedAttempts;}
 }

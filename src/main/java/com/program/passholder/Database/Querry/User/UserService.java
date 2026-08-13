@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -163,6 +164,53 @@ public class UserService {
         //System.out.println("Szukan w UserService maila:" + userMail);
         return (root, query, cb) ->
                 userMail == null ? null : cb.like(root.get("email"), "%" + userMail.toLowerCase().trim() + "%");
+    }
+
+    public Optional<Date> getLockUntil(String userMail){
+        return userRepository.findByEmail(userMail)
+                .map(UserEntity::getLockedUntil);
+    }
+    public Optional<Date> getLockUntil(long userId){
+        return userRepository.findById(userId)
+                .map(UserEntity::getLockedUntil);
+    }
+
+    public Optional<Integer> getFailedAttemps(String userMail){
+        return userRepository.findByEmail(userMail)
+                .map(UserEntity::getFailedAttempts);
+    }
+
+    public Optional<Integer> getFailedAttemps(long userId){
+        return userRepository.findById(userId)
+                .map(UserEntity::getFailedAttempts);
+    }
+
+    @Transactional
+    public void setLockedUntil(long userId, Date lockedUntil){
+        userRepository.findById(userId).ifPresent(user->{
+            user.setLockedUntil(lockedUntil);
+        });
+    }
+
+    @Transactional
+    public void setLockedUntil(String userMail, Date lockedUntil){
+        userRepository.findByEmail(userMail).ifPresent(user->{
+            user.setLockedUntil(lockedUntil);
+        });
+    }
+
+    @Transactional
+    public void setFailedAttemps(long userId, Integer failedAttempts){
+        userRepository.findById(userId).ifPresent(user->{
+            user.setFailedAttempts(failedAttempts);
+        });
+    }
+
+    @Transactional
+    public void setFailedAttemps(String userMail, Integer failedAttempts){
+        userRepository.findByEmail(userMail).ifPresent(user->{
+            user.setFailedAttempts(failedAttempts);
+        });
     }
 
 }

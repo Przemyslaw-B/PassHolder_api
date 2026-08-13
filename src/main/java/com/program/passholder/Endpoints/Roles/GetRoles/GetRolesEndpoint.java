@@ -68,7 +68,7 @@ public class GetRolesEndpoint {
             List<Object> list = getRoleDetailsOfUsers.getDetails(roleList);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "roles", list));
         }
-        setNewLog.setLog(12,ip);
+        //setNewLog.setLog(12,ip);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
     }
 

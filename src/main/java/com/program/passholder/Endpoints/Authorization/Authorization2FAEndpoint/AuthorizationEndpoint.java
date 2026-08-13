@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -54,6 +55,14 @@ public class AuthorizationEndpoint {
         long userId = getFromMail.getUserIdFromMail(userEmail);
         Optional<UserRoleEntity> entity = userRoleService.findByUserId(userId);
         int userRole = 0;
+        Date currentDate = new Date();
+        if(entity.isPresent()){
+            Optional<Date> accountLock = userService.getLockUntil(userId);
+            if(accountLock.isPresent() &&  accountLock.get().after(currentDate)){
+                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
+            }
+        }
+
         if (entity.isPresent()) {
             userRole = entity.get().getIdRole();
         }
@@ -78,11 +87,26 @@ public class AuthorizationEndpoint {
             data.put("securityPassword", securityPassword);
             data.put("status", "Validated");
 
-            setNewLog.setLog(1, ip, userId);    //Poprawna autoryzacja
+            setNewLog.setLog(1, ip, userId, userId);    //Poprawna autoryzacja
+            userService.setFailedAttemps(userId, 0);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success", "role", userRole, "data", data));
         } else {
-            setNewLog.setLog(2, ip, userId);    //Błędna autoryzacja
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed"));
+            setNewLog.setLog(2, ip, userId, userId);    //Błędna autoryzacja
+            int failedAttemps = 1;
+                Optional<Integer> userFailedAttemps = userService.getFailedAttemps(userId);
+            if (userFailedAttemps.isPresent()) {
+                failedAttemps = userFailedAttemps.get();
+            }
+            failedAttemps += 1;
+            userService.setFailedAttemps(userId,failedAttemps);
+            if(failedAttemps >= 5){
+                Date newLockDate = new Date(System.currentTimeMillis() + 5 * 60 * 1000);    //Data blokady Bieżąca data + 5 minut
+                userService.setLockedUntil(userId, newLockDate);
+                userService.setFailedAttemps(userId, 0);    //po blokadzie konta wyzerowac próby
+                setNewLog.setLog(30, ip, userId, userId);    //Blokada konta
+                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Niepoprawne dane."));
         }
     }
 }

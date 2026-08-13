@@ -46,7 +46,7 @@ public class SetSecurityPasswordEndpoint {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 if(userRole.isEmpty() || userRole.get() < 1){
-                    setNewLog.setLog(16, ip, userId);
+                    setNewLog.setLog(16, ip, userId, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }
 
@@ -63,7 +63,7 @@ public class SetSecurityPasswordEndpoint {
                 if(newSecurityPassword != null && !newSecurityPassword.equals("")) {
                     //System.out.println("Ustawiam nowe hasło..");
                     userService.setSecurityPassword(userId, newSecurityPassword);
-                    setNewLog.setLog(11,ip,userId);
+                    setNewLog.setLog(11,ip,userId, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok"));
 
                 } else{

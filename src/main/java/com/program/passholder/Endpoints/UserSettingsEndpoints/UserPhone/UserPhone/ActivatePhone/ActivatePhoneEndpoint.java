@@ -48,7 +48,7 @@ public class ActivatePhoneEndpoint {
                     if (isValidated) {
                         userService.setUserPhone(email, request.phone);
                         long userId = userService.getUserIdByMail(email);
-                        setNewLog.setLog(18, ip, userId);   //Loguj dodanie numeru telefonu
+                        setNewLog.setLog(18, ip, userId, userId);   //Loguj dodanie numeru telefonu
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
                     }
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", false));

@@ -58,7 +58,7 @@ public class PasswordRestoreSaveNewPasswordEndpoint {
                         //Wyciągnięcie usera jeśli istnieje użytkownik z takim email
                         if(userEntity.isPresent()){
                             long userId = userEntity.get().getId();
-                            setNewLog.setLog(7,ip, userId); //log pomyślnie zmienionego hasła
+                            setNewLog.setLog(7,ip, userId, userId); //log pomyślnie zmienionego hasła
                         }
                         return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true, "message", "Hasło zmienione pomyślnie"));
                     } else{

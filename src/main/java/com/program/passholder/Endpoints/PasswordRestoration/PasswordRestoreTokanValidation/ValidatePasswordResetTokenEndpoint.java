@@ -46,7 +46,7 @@ public class ValidatePasswordResetTokenEndpoint {
                 Optional<UserEntity> userEntity = userService.getEntityByMail(request.email);
                 if(userEntity.isPresent()){
                     long userId = userEntity.get().getId();
-                    setNewLog.setLog(23,ip, userId);    //poprawny token LOG
+                    setNewLog.setLog(23,ip, userId, userId);    //poprawny token LOG
                 }
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "success", true));
             } else{
@@ -54,7 +54,7 @@ public class ValidatePasswordResetTokenEndpoint {
                 Optional<UserEntity> userEntity = userService.getEntityByMail(request.email);
                 if(userEntity.isPresent()){
                     long userId = userEntity.get().getId();
-                    setNewLog.setLog(22,ip, userId);    //niepoprawny token LOG
+                    setNewLog.setLog(22,ip, userId, userId);    //niepoprawny token LOG
                 }
             }
         }

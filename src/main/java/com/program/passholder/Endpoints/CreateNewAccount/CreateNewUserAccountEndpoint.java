@@ -52,7 +52,7 @@ public class CreateNewUserAccountEndpoint {
         createNewUser.createNewUser(email, name, password);
         long userId = userService.getUserIdByMail(email);
 
-        setNewLog.setLog(5, ip, userId);
+        setNewLog.setLog(5, ip, userId, userId);
         return ResponseEntity.ok(Map.of("status", "accountCreated"));
     }
 

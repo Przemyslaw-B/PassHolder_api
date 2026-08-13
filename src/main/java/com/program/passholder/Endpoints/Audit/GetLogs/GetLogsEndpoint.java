@@ -51,6 +51,8 @@ public class GetLogsEndpoint {
             ip = httpRequest.getRemoteAddr();
         }
 
+        //System.out.println("Próba pobrania listy logów..");
+
         if(authHeader!=null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
             String userMail = jwtUtil.extractUsername(token);
@@ -91,7 +93,8 @@ public class GetLogsEndpoint {
                 pageNumber = 1;
             }
             long counter = 0;
-            long counterStart=pageNumber*rowsAmount;
+            //long counterStart=pageNumber*rowsAmount;
+            long counterStart = (long) (pageNumber-1)*rowsAmount;
             long counterEnd=counterStart+rowsAmount;
             for(LogEntity log : logList){
                 if(counter>=counterStart && counter<counterEnd){
@@ -107,6 +110,7 @@ public class GetLogsEndpoint {
                 }
                 counter++;
             }
+            //System.out.println("Lista pobrana.. Zwracam wynik o rozmiarze: " + finalList.size() + " wierszy.");
             //setNewLog.setLog(1,ip,userId,userId);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "logs", finalList, "pageNumber", pageNumber, "lastPage", lastPage));
         }

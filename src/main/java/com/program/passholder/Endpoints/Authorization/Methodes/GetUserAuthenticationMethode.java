@@ -47,7 +47,7 @@ public class GetUserAuthenticationMethode {
                 int userAuthMethode = userEntity.get().getNotificationMethod();
                 Optional<AuthenticationMethodesEntity> methodeEntity = authenticationMethodesService.getMethodeById(userAuthMethode);
                 if(methodeEntity.isPresent()){
-                    return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "methode", methodeEntity.get().getName()));
+                    return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "methode", methodeEntity.get().getName(), "methodeId", methodeEntity.get().getId()));
                 }
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "methode", "not found"));
             }

@@ -50,7 +50,7 @@ public class RestorePasswordEndpoint {
         Optional<UserEntity> userEntity = userService.getEntityByMail(requestedEmail);
         if(userEntity.isPresent()){
             long userId = userEntity.get().getId();
-            setNewLog.setLog(6,ip, userId);
+            setNewLog.setLog(6,ip, userId, userId);
         }
         return ResponseEntity.status(HttpStatus.OK).body(Map.of());
     }
