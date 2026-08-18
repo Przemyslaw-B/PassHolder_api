@@ -4,5 +4,4 @@ public class NewUserDTO {
     public String email;
     public String name;
     public String password;
-    public int rotation;
 }
