@@ -23,13 +23,13 @@ public class StoragedCredentialModification {
     private String newPassword;
     private int newRotation;
 
-    public boolean updateCredential(long recordId, long userId, String newUrl, String newLogin, String newPassword){//}, int newRotation){
+    public boolean updateCredential(long recordId, long userId, String newUrl, String newLogin, String newPassword){
         this.recordId = recordId;
         this.userId = userId;
         this.newUrl = newUrl;
         this.newLogin = newLogin;
         this.newPassword = newPassword;
-        //this.newRotation = newRotation;
+
         Boolean wasModified = false;
         if(checkUrl() && setUrl()){
             wasModified = true;
@@ -40,11 +40,6 @@ public class StoragedCredentialModification {
         if(checkPassword() && setPassword()){
             wasModified = true;
         }
-        /*
-        if(checkRotation() && setRotation()){
-            wasModified = true;
-        }
-        */
         return wasModified;
     }
 
@@ -101,26 +96,5 @@ public class StoragedCredentialModification {
         }
         return false;
     }
-
-    /*
-    private boolean setRotation(){
-        if(recordId > 0 && userId > 0 && newRotation >= 0){
-            Boolean result = updatePasswordRecord.setRotation(recordId, userId, newRotation);
-            if(result){return true;}
-        }
-        return false;
-    }
-
-    private boolean checkRotation(){
-        if(recordId >0 && userId >0 && newRotation >= 0){
-            Optional<PasswordEntity> entity = passwordRepository.findByIdAndUserId(recordId, userId);
-            if(entity.isPresent() && !Objects.equals(entity.get().getRotation(), newRotation) ){
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-
 
 }

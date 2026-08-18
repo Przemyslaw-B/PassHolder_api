@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface PasswordRepository extends JpaRepository<PasswordEntity,Long> {
     List<PasswordEntity> findByUserId(Long user_id);
+    List<PasswordEntity> findByUserIdOrderByIdAsc(Long user_id);
     Optional<PasswordEntity> findById(Long id);
     Optional<PasswordEntity> findByIdAndUserId(Long id, Long user_id);
     void deleteByIdAndUserId(Long id, Long user_id);

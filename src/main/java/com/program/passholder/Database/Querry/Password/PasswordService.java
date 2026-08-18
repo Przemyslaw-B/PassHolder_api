@@ -17,7 +17,7 @@ public class PasswordService {
     }
 
     public List<PasswordEntity> getStorageByUserId(Long user_id){
-        return passwordRepository.findByUserId(user_id);
+        return passwordRepository.findByUserIdOrderByIdAsc(user_id);
     }
 
     public Optional<PasswordEntity> getPasswordByIdAndUserId(Long id, Long user_id){

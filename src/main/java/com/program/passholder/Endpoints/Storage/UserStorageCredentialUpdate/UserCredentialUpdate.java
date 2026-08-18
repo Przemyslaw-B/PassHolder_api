@@ -59,7 +59,6 @@ public class UserCredentialUpdate {
                 String newUrl = requestBody.url;
                 String newLogin = requestBody.login;
                 String newPassword = requestBody.password;
-                //int newRotation = requestBody.rotation;
                 Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword);// , newRotation);
                 if(result){
                     if(!newLogin.isEmpty()){

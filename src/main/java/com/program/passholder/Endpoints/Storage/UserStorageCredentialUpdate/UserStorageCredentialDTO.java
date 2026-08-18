@@ -5,5 +5,4 @@ public class UserStorageCredentialDTO {
     public String url;
     public String login;
     public String password;
-    //public int rotation;
 }
