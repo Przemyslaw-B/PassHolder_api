@@ -44,7 +44,7 @@ public class StoragedCredentialModification {
     }
 
     private boolean setUrl(){
-        if(recordId >0 && userId >0 && !newUrl.isEmpty()){
+        if(recordId >0 && userId >0){
             Boolean result = updatePasswordRecord.setUrl(recordId, userId, newUrl);
             if(result){return true;}
         }
@@ -52,10 +52,17 @@ public class StoragedCredentialModification {
     }
 
     private boolean checkUrl(){
-        if(recordId >0 && userId >0 && !newUrl.isEmpty()){
+        if(recordId >0 && userId >0){
             Optional<PasswordEntity> entity = passwordRepository.findByIdAndUserId(recordId, userId);
-            if(entity.isPresent() && !Objects.equals(entity.get().getUrl(), newUrl) ){
-                return true;
+            if(entity.isPresent() ){
+                String oldUrl = entity.get().getUrl();
+                String updatedUrl = "";
+                if(!newUrl.isEmpty()){
+                    updatedUrl = newUrl;
+                }
+                if(!oldUrl.equals(updatedUrl)){
+                    return true;
+                }
             }
         }
         return false;

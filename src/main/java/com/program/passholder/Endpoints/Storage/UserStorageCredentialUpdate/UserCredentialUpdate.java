@@ -1,6 +1,8 @@
 package com.program.passholder.Endpoints.Storage.UserStorageCredentialUpdate;
 
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
+import com.program.passholder.Database.Querry.Password.PasswordEntity;
+import com.program.passholder.Database.Querry.Password.PasswordRepository;
 import com.program.passholder.Database.Querry.Password.UpdateStorage.UpdatePasswordRecord;
 import com.program.passholder.Database.Querry.User.User.GetUserFromMail;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
@@ -30,6 +32,8 @@ public class UserCredentialUpdate {
     UserRoleService userRoleService;
     @Autowired
     SetNewLog setNewLog;
+    @Autowired
+    PasswordRepository passwordRepository;
 
     @PostMapping("/ModifyUserCredential")
     public ResponseEntity<Map<String, String>> userCredentialUpdate(
@@ -59,12 +63,19 @@ public class UserCredentialUpdate {
                 String newUrl = requestBody.url;
                 String newLogin = requestBody.login;
                 String newPassword = requestBody.password;
-                Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword);// , newRotation);
+                Optional<PasswordEntity> entity = passwordRepository.findByIdAndUserId(recordId, userId);
+                if(!entity.isPresent()){
+                    return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "Validated", "changes", "failed"));
+                }
+                String oldUrl = entity.get().getUrl();
+                String oldLogin = entity.get().getLogin();
+
+                Boolean result = storagedCredentialModification.updateCredential(recordId, userId, newUrl, newLogin, newPassword);
                 if(result){
-                    if(!newLogin.isEmpty()){
+                    if(!newLogin.equals(oldLogin)){
                         setNewLog.setLog(16,ip,userId,userId, recordId);
                     }
-                    if(!newUrl.isEmpty()){
+                    if(newUrl.equals(oldUrl)){
                         setNewLog.setLog(15,ip,userId,userId, recordId);
                     }
                     if(!newPassword.isEmpty()){
