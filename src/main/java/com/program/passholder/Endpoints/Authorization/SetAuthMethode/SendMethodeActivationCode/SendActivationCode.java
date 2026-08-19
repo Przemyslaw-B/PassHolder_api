@@ -56,7 +56,7 @@ public class SendActivationCode {
                     if(request.methode.equals(methode.getName())){
                         int methodeId = methode.getId();
                         proceedAuth.sendKeyToPickedMethode(userMail, methodeId);
-                        return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK","success", true));
+                        return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK","success", true, "atMethod", methodeId));
                     }
                 }
             }

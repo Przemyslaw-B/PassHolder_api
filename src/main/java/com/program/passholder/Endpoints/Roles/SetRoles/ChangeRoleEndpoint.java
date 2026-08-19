@@ -58,7 +58,7 @@ public class ChangeRoleEndpoint {
 
                 Optional<Integer> userRole =userRoleService.getRoleIdByUserId(userId);
                 Optional<Integer> userModRole =getRoleFromUserMail.getRoleId(userModMail);
-                if(userRole.isEmpty() || userModRole.isEmpty() || userRole.get() <= userModRole.get()){
+                if(userRole.isEmpty() || userModRole.isEmpty() || userRole.get() < userModRole.get()){
                     //setNewLog.setLog(16, ip, userId);
                     return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "fail", "error", "brak uprawnień"));
                 }

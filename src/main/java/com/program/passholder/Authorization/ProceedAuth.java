@@ -72,7 +72,8 @@ public ProceedAuth(SendAuthKeyToUser sendAuthKeyToUser, SetAuthKey setAuthKey, S
                     GenerateAuthKey generateAuthKey = new GenerateAuthKey();
                     String generatedKey = generateAuthKey.generateKey();
                     setAuthKey.setAuthKey(email, generatedKey);
-                    sendAuthKey(email, generatedKey);
+                    //sendAuthKey(email, generatedKey);
+                    sendAuthKeyToUser.sendEmail(email, generatedKey);
                     break;
             }
         }

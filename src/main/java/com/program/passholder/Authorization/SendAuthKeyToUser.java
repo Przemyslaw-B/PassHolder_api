@@ -42,7 +42,7 @@ public class SendAuthKeyToUser {
 
     }
 
-    protected void sendEmail(String email, String key) {
+    public void sendEmail(String email, String key) {
         authenticatorMail.sendAuthenticatorMail(email, key);
     }
 }

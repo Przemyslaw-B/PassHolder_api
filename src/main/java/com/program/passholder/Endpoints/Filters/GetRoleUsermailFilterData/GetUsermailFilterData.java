@@ -58,7 +58,11 @@ public class GetUsermailFilterData {
                 list = getUsersListFilteredByMail.getFilteredUserList(request.userMail);
                 if(list!=null && list.size()>0){
                     for(UserEntity entity : list){
-                        data.add(entity.getEmail());
+                        Optional<Integer> tempRole = userRoleService.getRoleIdByUserId(entity.getId());
+                        if(tempRole.isPresent() && tempRole.get() == 1){
+                            data.add(entity.getEmail());
+                        }
+
                     }
                 }
                 return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "ok", "data", data));
