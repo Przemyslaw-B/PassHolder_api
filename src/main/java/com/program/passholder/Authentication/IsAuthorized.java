@@ -1,4 +1,4 @@
-package com.program.passholder.Authorization;
+package com.program.passholder.Authentication;
 
 import com.program.passholder.Database.Querry.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.program.passholder.Authorization;
+package com.program.passholder.Authentication;
 
 import org.springframework.stereotype.Component;
 

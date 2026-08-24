@@ -1,9 +1,9 @@
-package com.program.passholder.Authorization;
+package com.program.passholder.Authentication;
 
 import com.program.passholder.Database.Querry.User.Authentication.SetAuthKey;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.GoogleAuthenticator.TOTPService;
+import com.program.passholder.Authenticator.TOTPService;
 import com.program.passholder.Sms.SmsVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

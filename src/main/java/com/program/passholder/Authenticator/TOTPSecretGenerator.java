@@ -1,4 +1,4 @@
-package com.program.passholder.GoogleAuthenticator;
+package com.program.passholder.Authenticator;
 
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.secret.SecretGenerator;

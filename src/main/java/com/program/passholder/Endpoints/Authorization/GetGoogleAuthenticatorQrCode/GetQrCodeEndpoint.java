@@ -4,7 +4,7 @@ import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.GoogleAuthenticator.TOTPService;
+import com.program.passholder.Authenticator.TOTPService;
 import com.program.passholder.Session.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

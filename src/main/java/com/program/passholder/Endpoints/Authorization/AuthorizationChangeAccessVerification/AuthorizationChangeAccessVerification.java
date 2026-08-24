@@ -4,13 +4,11 @@ import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Endpoints.Login.LoginCredentialsReceivingEndpoint.LoginRequest;
-import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
+import com.program.passholder.LoginProcessing.LoginCredentialsProcessing.ValidationUser;
 import com.program.passholder.Session.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

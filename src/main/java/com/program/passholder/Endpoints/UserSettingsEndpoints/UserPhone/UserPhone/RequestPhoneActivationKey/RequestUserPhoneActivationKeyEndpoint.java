@@ -1,9 +1,8 @@
 package com.program.passholder.Endpoints.UserSettingsEndpoints.UserPhone.UserPhone.RequestPhoneActivationKey;
 
-import com.program.passholder.Authorization.GenerateAuthKey;
-import com.program.passholder.Authorization.ProceedAuth;
+import com.program.passholder.Authentication.GenerateAuthKey;
+import com.program.passholder.Authentication.ProceedAuth;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
-import com.program.passholder.Database.Querry.User.Authentication.SetAuthKey;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Session.JwtUtil;

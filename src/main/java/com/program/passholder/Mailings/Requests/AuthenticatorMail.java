@@ -14,8 +14,8 @@ public class AuthenticatorMail {
     }
 
     public void sendAuthenticatorMail(String email, String key){
-        String topic = "Your authentication key is here!";
-        String text = "Your key: " + key;
+        String topic = "PassHolder - kod uwierzytelniający";
+        String text = "Oto Twój kod: " + key;
         emailService.sendEmail(email, topic, text);
     }
 

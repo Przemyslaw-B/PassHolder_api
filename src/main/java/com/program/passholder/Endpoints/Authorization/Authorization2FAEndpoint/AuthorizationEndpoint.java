@@ -1,6 +1,6 @@
 package com.program.passholder.Endpoints.Authorization.Authorization2FAEndpoint;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserEntity;
@@ -86,7 +86,6 @@ public class AuthorizationEndpoint {
             data.put("token", token);
             data.put("securityPassword", securityPassword);
             data.put("status", "Validated");
-
             setNewLog.setLog(1, ip, userId, userId);    //Poprawna autoryzacja
             userService.setFailedAttemps(userId, 0);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success", "role", userRole, "data", data));
@@ -104,9 +103,10 @@ public class AuthorizationEndpoint {
                 userService.setLockedUntil(userId, newLockDate);
                 userService.setFailedAttemps(userId, 0);    //po blokadzie konta wyzerowac próby
                 setNewLog.setLog(30, ip, userId, userId);    //Blokada konta
-                return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
+                //return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
             }
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Niepoprawne dane."));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
         }
     }
 }

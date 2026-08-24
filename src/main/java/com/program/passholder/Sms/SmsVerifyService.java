@@ -16,7 +16,6 @@ public class SmsVerifyService {
     }
 
     public void sendVerificationCode(String phoneNumber) {
-
         Verification.creator(
                 properties.getVerifyServiceSid(),
                 phoneNumber,
@@ -25,13 +24,11 @@ public class SmsVerifyService {
     }
 
     public boolean verifyCode(String phoneNumber, String code) {
-
         VerificationCheck verificationCheck =
                 VerificationCheck.creator(properties.getVerifyServiceSid())
                         .setTo(phoneNumber)
                         .setCode(code)
                         .create();
-
         return "approved".equals(verificationCheck.getStatus());
     }
 }

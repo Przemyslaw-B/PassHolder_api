@@ -1,8 +1,7 @@
 package com.program.passholder.Endpoints.UserPassword;
 
 import com.program.passholder.Database.Querry.User.UserRepository;
-import com.program.passholder.Endpoints.Storage.SaveNewUserStorageRecord.StorageRecordDTO;
-import com.program.passholder.Login.LoginCredentialsProcessing.ValidationUser;
+import com.program.passholder.LoginProcessing.LoginCredentialsProcessing.ValidationUser;
 import com.program.passholder.Session.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

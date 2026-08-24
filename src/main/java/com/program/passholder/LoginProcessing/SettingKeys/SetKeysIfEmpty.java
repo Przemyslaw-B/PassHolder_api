@@ -1,4 +1,4 @@
-package com.program.passholder.Login.SettingKeys;
+package com.program.passholder.LoginProcessing.SettingKeys;
 
 import com.program.passholder.Database.Querry.User.PrivateKey.SetPrivateKeyByEmail;
 import com.program.passholder.Database.Querry.User.PublicKey.SetPublicKeyByEmail;

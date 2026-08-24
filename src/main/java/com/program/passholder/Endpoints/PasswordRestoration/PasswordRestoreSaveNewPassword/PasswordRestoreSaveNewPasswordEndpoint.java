@@ -1,12 +1,10 @@
 package com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreSaveNewPassword;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
 import com.program.passholder.Encryption.Encoder;
-import com.program.passholder.Endpoints.PasswordRestoration.PasswordRestoreInit.RestorePasswordDTO;
-import com.program.passholder.PasswordRestore.ProceedPasswordRestoringProcess;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

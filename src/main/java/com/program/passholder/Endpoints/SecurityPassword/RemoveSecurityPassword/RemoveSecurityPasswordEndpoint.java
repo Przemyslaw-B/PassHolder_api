@@ -1,9 +1,8 @@
 package com.program.passholder.Endpoints.SecurityPassword.RemoveSecurityPassword;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Database.Querry.UserRole.UserRoleService;
 import com.program.passholder.Session.JwtUtil;
 import com.program.passholder.Storage.RemoveStorage;
 import jakarta.servlet.http.HttpServletRequest;

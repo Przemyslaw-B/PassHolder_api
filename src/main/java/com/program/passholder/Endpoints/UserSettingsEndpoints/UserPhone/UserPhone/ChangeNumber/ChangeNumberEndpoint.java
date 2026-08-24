@@ -1,9 +1,8 @@
 package com.program.passholder.Endpoints.UserSettingsEndpoints.UserPhone.UserPhone.ChangeNumber;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Endpoints.UserSettingsEndpoints.UserPhone.UserPhone.ActivatePhone.ActivatePhoneDTO;
 import com.program.passholder.Session.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

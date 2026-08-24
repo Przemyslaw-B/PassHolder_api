@@ -1,6 +1,6 @@
 package com.program.passholder.Endpoints.Authorization.SetAuthMethode.SendMethodeActivationCode;
 
-import com.program.passholder.Authorization.ProceedAuth;
+import com.program.passholder.Authentication.ProceedAuth;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.AuthenticationMethodes.AuthenticationMethodesEntity;
 import com.program.passholder.Database.Querry.AuthenticationMethodes.AuthenticationMethodesService;
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

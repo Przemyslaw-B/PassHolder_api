@@ -1,13 +1,11 @@
 package com.program.passholder.Endpoints.Authorization.ValidateAuthCode;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.User.User.GetFromMail;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Database.Querry.UserRole.UserRoleEntity;
 import com.program.passholder.Database.Querry.UserRole.UserRoleService;
-import com.program.passholder.Endpoints.Authorization.Authorization2FAEndpoint.AuthKeyDTO;
 import com.program.passholder.Session.JwtUtil;
 import com.program.passholder.Sms.SmsVerifyService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 

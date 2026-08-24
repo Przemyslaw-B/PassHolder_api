@@ -1,7 +1,7 @@
 package com.program.passholder.Endpoints.RSA;
 
 import com.program.passholder.Database.Querry.User.PublicKey.GetPublicKeyByEmail;
-import com.program.passholder.Login.SettingKeys.SetKeysIfEmpty;
+import com.program.passholder.LoginProcessing.SettingKeys.SetKeysIfEmpty;
 import com.program.passholder.Session.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

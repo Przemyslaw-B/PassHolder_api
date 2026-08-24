@@ -1,21 +1,18 @@
 package com.program.passholder.Endpoints.SecurityPassword.ResetSecurityPassword;
 
-import com.program.passholder.Authorization.ValidateAuthKey;
+import com.program.passholder.Authentication.ValidateAuthKey;
 import com.program.passholder.Database.Querry.AuditLogs.SetNewLog;
 import com.program.passholder.Database.Querry.Password.PasswordEntity;
 import com.program.passholder.Database.Querry.Password.PasswordService;
 import com.program.passholder.Database.Querry.User.UserEntity;
 import com.program.passholder.Database.Querry.User.UserService;
-import com.program.passholder.Endpoints.SecurityPassword.RemoveSecurityPassword.RemoveSecurityPasswordDTO;
 import com.program.passholder.Session.JwtUtil;
-import com.program.passholder.Storage.StoragedCredentialModification;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
