@@ -1,8 +1,8 @@
-version: 1.0.5
+version: 1.0.8
 files:
-  - url: PassHolder Setup 1.0.5.exe
-    sha512: 0bKtdkpw3SONXrwtCb5Ui5e3jJztVatj3BDo1IqboyqlwYUhdd9NOEQnRk8Ov460AiKfeNoABW7jTw+W/uepOg==
-    size: 101026523
-path: PassHolder Setup 1.0.5.exe
-sha512: 0bKtdkpw3SONXrwtCb5Ui5e3jJztVatj3BDo1IqboyqlwYUhdd9NOEQnRk8Ov460AiKfeNoABW7jTw+W/uepOg==
-releaseDate: '2026-06-21T09:20:13.750Z'
+  - url: PassHolder Setup 1.0.8.exe
+    sha512: 8e3kuUO2jBnvJVbqx0QQ8PjFanmux1Wn/jG9z2uzbijtyVhjOsuDjniYt1yfclRs85RaPeMaYIKgQBsvtHSCLA==
+    size: 101033306
+path: PassHolder Setup 1.0.8.exe
+sha512: 8e3kuUO2jBnvJVbqx0QQ8PjFanmux1Wn/jG9z2uzbijtyVhjOsuDjniYt1yfclRs85RaPeMaYIKgQBsvtHSCLA==
+releaseDate: '2026-08-24T09:21:54.550Z'
