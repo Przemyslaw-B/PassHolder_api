@@ -53,7 +53,7 @@ public class ActivateNewMethode {
             if(entity.isPresent() && methodes !=null && !methodes.isEmpty()) {
                 long userId = entity.get().getId();
                 for(AuthenticationMethodesEntity methode : methodes) {
-                    System.out.println("sprawdzam czy to metoda? DB: " + methode.getName() + " === user: " + request.methode);
+                    //System.out.println("sprawdzam czy to metoda? DB: " + methode.getName() + " === user: " + request.methode);
                     if(request.methode.equals(methode.getName())){
                         int methodeId = methode.getId();
                         Boolean isValidated = validateAuthKey.validateMethode(userMail,methodeId, request.code);

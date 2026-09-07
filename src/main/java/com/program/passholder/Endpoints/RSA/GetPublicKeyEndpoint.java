@@ -33,8 +33,7 @@ public class GetPublicKeyEndpoint {
                 setKeysIfEmpty.setKeysIfEmpty(email);
                 String publicKey = getPublicKeyByEmail.getPublicKeyByEmail(email);
                 if (publicKey == null) {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body(Map.of("error", "Public key not found.", "publicKey", ""));
+                    return ResponseEntity.ok(Map.of("error", "Public key not found.", "publicKey", ""));
                 }
                 return ResponseEntity.ok(Map.of("status", "Ok", "publicKey", publicKey));
             }

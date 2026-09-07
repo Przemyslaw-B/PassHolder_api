@@ -55,6 +55,8 @@ public class UserEntity {
     private Date lockedUntil;
     @Column(name="failed_attempts")
     private Integer failedAttempts;
+    @Column(name="salt")
+    private String salt;
 
 
     public Long getId() {return id;}
@@ -115,4 +117,7 @@ public class UserEntity {
 
     public Integer getFailedAttempts() {return failedAttempts;}
     public void setFailedAttempts(Integer failedAttempts) {this.failedAttempts = failedAttempts;}
+
+    public void setSalt(String salt) {this.salt = salt;}
+    public String getSalt() {return salt;}
 }

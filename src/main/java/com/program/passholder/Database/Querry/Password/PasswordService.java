@@ -35,4 +35,18 @@ public class PasswordService {
         });
     }
 
+    @Transactional
+    public void setStorageUrl(long id, long userId, String newUrl){
+        passwordRepository.findByIdAndUserId(id, userId).ifPresent(password -> {
+            password.setUrl(newUrl);
+        });
+    }
+
+    @Transactional
+    public void setStorageLogin(long id, long userId, String newLogin){
+        passwordRepository.findByIdAndUserId(id, userId).ifPresent(password -> {
+            password.setLogin(newLogin);
+        });
+    }
+
 }

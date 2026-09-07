@@ -40,6 +40,7 @@ public class CreateNewUserAccountEndpoint {
         String email = request.email;
         String password = request.password;
         String name = request.name;
+        String salt = request.salt;
         boolean isExist = userService.isUserExist(email);
         //System.out.println("isExist? " + isExist);
         if(email.isEmpty() || password.isEmpty() ||name.isEmpty() ){
@@ -49,7 +50,7 @@ public class CreateNewUserAccountEndpoint {
             //setNewLog.setLog(18, ip);
             return ResponseEntity.ok(Map.of("status", "alreadyExist"));
         }
-        createNewUser.createNewUser(email, name, password);
+        createNewUser.createNewUser(email, name, password, salt);
         long userId = userService.getUserIdByMail(email);
 
         setNewLog.setLog(5, ip, userId, userId);

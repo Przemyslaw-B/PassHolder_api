@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/restorePassword").permitAll()
                         .requestMatchers("/api/restorePassword/validateToken").permitAll()
                         .requestMatchers("/api/restorePassword/saveNewPassword").permitAll()
+                        .requestMatchers("/api/oldPassValidation").permitAll()
                         .anyRequest().authenticated())               // Cała reszta wymaga tokenu
                 .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);    //W pierwszej kolejności sprawdzaj dodany jwtFilter (Token użytkownika)
         return http.build();

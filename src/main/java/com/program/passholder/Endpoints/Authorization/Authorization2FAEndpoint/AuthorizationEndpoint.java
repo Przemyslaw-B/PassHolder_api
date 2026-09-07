@@ -50,6 +50,8 @@ public class AuthorizationEndpoint {
             ip = httpRequest.getRemoteAddr();
         }
 
+        System.out.println("Odebrany request!");
+
         String userEmail = requestBody.email;
         Optional<UserEntity> userEntity = userService.getEntityByMail(userEmail);
         long userId = getFromMail.getUserIdFromMail(userEmail);
@@ -68,6 +70,7 @@ public class AuthorizationEndpoint {
         }
 
         String authKey = requestBody.authKey;
+        System.out.println("auth key + " + authKey);
         Boolean validationStatus = false;
         if (userEntity.isPresent()) {
             String userPhone = userEntity.get().getPhone();
@@ -80,12 +83,14 @@ public class AuthorizationEndpoint {
             String token = jwtUtil.generateToken(email);
             String securityPassword = userService.getSecurityPasswordById(userId);
             String username = userEntity.get().getName();
+            String salt = userEntity.get().getSalt();
 
             HashMap<String, Object> data = new HashMap<>();
             data.put("username", username);
             data.put("token", token);
             data.put("securityPassword", securityPassword);
             data.put("status", "Validated");
+            data.put("salt", salt);
             setNewLog.setLog(1, ip, userId, userId);    //Poprawna autoryzacja
             userService.setFailedAttemps(userId, 0);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "success", "role", userRole, "data", data));
@@ -104,9 +109,9 @@ public class AuthorizationEndpoint {
                 userService.setFailedAttemps(userId, 0);    //po blokadzie konta wyzerowac próby
                 setNewLog.setLog(30, ip, userId, userId);    //Blokada konta
                 //return ResponseEntity.status(HttpStatus.OK).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
+                return ResponseEntity.ok(Map.of("status", "OK", "auth", "failed", "reason","Blocked"));
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid"));
+            return ResponseEntity.ok(Map.of("status", "Invalid"));
         }
     }
 }

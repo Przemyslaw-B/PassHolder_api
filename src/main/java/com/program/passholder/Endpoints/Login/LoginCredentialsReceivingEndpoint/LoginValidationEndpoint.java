@@ -64,7 +64,7 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
         if(userEntity.isPresent()){
             Optional<Date> accountLock = userService.getLockUntil(userId);
             if(accountLock.isPresent() &&  accountLock.get().after(currentDate)){
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("status", "Invalid", "reason","Blocked"));
+                return ResponseEntity.ok(Map.of("status", "Invalid", "reason","Blocked"));
             }
         }
 
@@ -77,7 +77,7 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
                 proceedAuth.proceed(email); //wyślij wiadomość do usera
                 setNewLog.setLog(3,ip, userId, userId); //logowanie użytkownika
                 userService.setFailedAttemps(userId, 0);
-                return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode));
+                return ResponseEntity.ok(Map.of("status", "Validated","authMethode", userAuthMethode, "auth", "failed"));
             }
             //NIEUDANA PRÓBA LOGOWANIA
             setNewLog.setLog(29,ip, userId, userId); //nieudane logowanie użytkownika
@@ -93,14 +93,14 @@ public ResponseEntity<Map<String, Object>> isUserValidEndpoint(
                 userService.setLockedUntil(userId, newLockDate);
                 userService.setFailedAttemps(userId, 0);    //Po zablokowaniu konta wyzerowanie prób
                 setNewLog.setLog(30, ip, userId, userId);    //Blokada konta
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("status", "Invalid", "reason","Blocked"));
+                return ResponseEntity.ok(Map.of("status", "Invalid", "reason","Blocked", "auth", "success"));
             }
             //return ResponseEntity.ok(Map.of("status", "Invalid", "reason", "Błędne dane"));
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("status", "Invalid", "reason","Blocked"));
+            return ResponseEntity.ok(Map.of("status", "Invalid", "reason","Blocked", "auth", "failed"));
         }
         //setNewLog.setLog(4,ip, userId);
         //return ResponseEntity.ok(Map.of("status", "Invalid"));
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("status", "Invalid"));
+        return ResponseEntity.ok(Map.of("status", "Invalid", "auth", "failed"));
     }
 
 }

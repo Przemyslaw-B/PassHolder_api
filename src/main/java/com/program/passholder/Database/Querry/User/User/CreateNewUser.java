@@ -29,13 +29,14 @@ public class CreateNewUser {
     }
 
     @Transactional
-    public void createNewUser(String email, String name, String password) {
+    public void createNewUser(String email, String name, String password, String salt) {
         System.out.println("Dodaję nowe konto do DB: " + email + ", " +  name + ", " + password);
         String hashPass = hash.passwordEncoder().encode(password);  //Hashowanie hasła
         UserEntity newUser = new UserEntity();
         newUser.setEmail(email);
         newUser.setName(name);
         newUser.setPassword(hashPass);
+        newUser.setSalt(salt);
         newUser.setNotificationMethod(1);
         userRepository.save(newUser);
 
